@@ -47,14 +47,27 @@ Validated content:
 The group public-data field `interp_quality` (XML `interpQuality`) maps to the
 native `normal`, `high` and `ultra` modes found next to the option string:
 
-- `0 normal`: linear interpolation.
-- `1 high`: 4-point Catmull-Rom cubic interpolation.
-- `2 ultra`: 6-point fifth-order Lagrange interpolation (Cadence-defined; the
-  native ultra kernel is not decoded).
+- `0 normal`: recovered 4-point third-order Lagrange interpolation.
+- `1 high`: Cadence currently uses 4-point Catmull-Rom interpolation.
+- `2 ultra`: Cadence currently uses 6-point fifth-order Lagrange interpolation.
 
-Cubic reads `index-1..index+2`. Streaming plans the previous page as well, and
-falls back to linear when either outer tap is unavailable. The analysed
-libraries use `normal` for every group.
+Native `BEngine::SetVoiceParameters` selects windowed-sinc tables for `high`
+and `ultra`; Cadence's two kernels are approximations. Native normal dispatches
+through `BDsp::DoGetBlockSampler` / `BSample::FillBlock_ResL` to
+`BSample::ResampleChannelQuad_L_SSE2`, whose four taps use the recovered cubic
+polynomial with factors `1/2` and `1/6`.
+
+Normal reads `index-1..index+2`; streaming includes the previous page. Cadence
+retains a bounded linear fallback when outer taps are unavailable, including
+sample/zone edges. Native guard samples and loop-edge tap remapping remain
+unverified. The analysed libraries use `normal` for every group.
+
+A controlled Piano Uno dry capture at 48 kHz improved from 54.03 dB to 56.31 dB
+raw SNR after replacing normal's previous linear kernel, with zero fitted delay
+and no gain compensation. A separate playback-position drift and release-tail
+difference remain; this does not establish sample-exact native playback.
+See [controlled sampler fidelity](kontakt-sampler-fidelity.md) for the six-case
+comparison and independent native phase trace.
 
 ## Limits
 
@@ -62,8 +75,9 @@ libraries use `normal` for every group.
   entries are ignored, and loops are not played simultaneously.
 - Ping-pong loops do not apply a crossfade; their turnaround is inherently
   value-continuous.
-- `ultra` uses a 6-point Lagrange kernel rather than the native kernel, so it
-  is not sample-exact against Kontakt.
+- `high` and `ultra` use approximate kernels rather than the native
+  windowed-sinc kernels. Normal retains different boundary handling and
+  playback-position arithmetic, so no mode is claimed sample-exact.
 - Finite counts and tuned loops are accepted from XML and binary presets, but
   the analysed retail libraries only exercise infinite, untuned loops.
 
@@ -75,3 +89,12 @@ libraries use `normal` for every group.
 - `../../Kontakt-8-REA/pseudocode/functions/0x100137480.c`
   (`SampleEditorModule::SetLoopCount`)
 - Kontakt 8 string table: `interpQuality` followed by `normal`, `high`, `ultra`.
+
+- Saved original Kontakt arm64 pseudocode, analysis profile
+  `040072c9c8ab8c896677a5e18badb276196ce107557bde41bc438752d586aebd`:
+  `0x1003e803c` (`BEngine::SetVoiceParameters`, quality/table selection),
+  `0x10046e510` (`BDsp::DoGetBlockSampler`, resampling dispatch),
+  `0x10046ec00` (`BSample::FillBlock_ResL`, normal path),
+  `0x1004dc2a4` (`BSample::ResampleChannelQuad_L_SSE2`, four-point polynomial).
+  These are static evidence; saved native audio supplies the bounded runtime
+  comparison above.

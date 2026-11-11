@@ -1563,8 +1563,7 @@ fn render_voice(
             {
                 let candidates = if voice.direction >= 0.0 {
                     [
-                        page.checked_sub(PAGE_FRAMES)
-                            .filter(|_| voice.interp_quality > 0 || voice.loop_state.is_some()),
+                        page.checked_sub(PAGE_FRAMES),
                         Some(page),
                         page.checked_add(PAGE_FRAMES),
                         page.checked_add(2 * PAGE_FRAMES),
@@ -1798,6 +1797,23 @@ fn read_asset(
     }
 }
 
+// Kontakt normal quality: BSample::ResampleChannelQuad_L_SSE2 (0x1004dc2a4).
+// Preserve the recovered polynomial grouping and f32 constants. High/ultra
+// retain their existing approximations until their sinc kernels are recovered.
+fn lagrange4(y0: (f32, f32), y1: (f32, f32), y2: (f32, f32), y3: (f32, f32), t: f32) -> (f32, f32) {
+    let x = t + 1.0;
+    let y = x - 1.0;
+    let z = y - 1.0;
+    let channel = |a: f32, b: f32, c: f32, d: f32| {
+        (z - 1.0) * (x * b * z - y * x * c) * 0.5
+            + (z * y * x * d - (z - 1.0) * z * a * y) * 0.16666667
+    };
+    (
+        channel(y0.0, y1.0, y2.0, y3.0),
+        channel(y0.1, y1.1, y2.1, y3.1),
+    )
+}
+
 fn cubic_interp(
     y0: (f32, f32),
     y1: (f32, f32),
@@ -1921,6 +1937,14 @@ fn sample_at(
     let next = (index + 1).min(end - 1);
     let y1 = read_asset(sample, streaming, voice_index, index)?;
     let y2 = read_asset(sample, streaming, voice_index, next)?;
+    if quality == 0 && index > 0 && index + 2 < end {
+        if let (Some(y0), Some(y3)) = (
+            read_asset(sample, streaming, voice_index, index - 1),
+            read_asset(sample, streaming, voice_index, index + 2),
+        ) {
+            return Some(lagrange4(y0, y1, y2, y3, fraction));
+        }
+    }
     if quality >= 2 && index >= 2 && index + 3 < end {
         let taps = (
             read_asset(sample, streaming, voice_index, index - 2),

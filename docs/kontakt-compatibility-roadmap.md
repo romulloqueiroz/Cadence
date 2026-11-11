@@ -88,13 +88,15 @@ of runtime parity. Smaller stages may complete independently within an area.
 - [x] Finite loop counts, loop retuning and forward-loop crossfades, with XML
   and binary fields. See
   [loops and interpolation](kontakt-loops-and-interpolation.md).
-- [x] Interpolation quality: `normal` linear, `high` cubic; `ultra` currently
-  uses the same cubic kernel. Streaming falls back to linear when outer taps
-  are unavailable.
+- [x] Interpolation quality: recovered `normal` 4-point Lagrange; `high`
+  Catmull-Rom and `ultra` 6-point Lagrange remain approximations of native
+  windowed-sinc modes. Streaming falls back to linear when outer taps are
+  unavailable. Normal playback-position arithmetic and native edge handling
+  remain to be matched.
 - [x] Sustain/release loop switching and a 6-point `ultra` kernel; ping-pong
   turnarounds are value-continuous and need no crossfade.
 - [ ] Additional loop entries beyond the first sustain/release pair, exact
-  native `ultra`, and wider boundary/high-transposition parity.
+  native high/ultra kernels, and wider boundary/high-transposition parity.
 
 ### 5. Kontakt filters and effects
 

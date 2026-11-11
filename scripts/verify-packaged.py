@@ -4,6 +4,7 @@
 Run from a normal macOS Terminal when the agent environment denies POSIX IPC.
 No elevated privileges, installed-plugin changes, test skips or IPC substitutions.
 """
+import argparse
 import ctypes
 import datetime
 import errno
@@ -18,7 +19,11 @@ import tempfile
 
 def main():
     root = Path(__file__).resolve().parents[1]
-    build = root / "app/build"
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--build-dir", type=Path, default=root / "app/build",
+                        help="Configured CMake build directory (for example app/build-release)")
+    args = parser.parse_args()
+    build = args.build_dir.resolve()
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     output = build / "verification" / f"packaged-{stamp}-{os.getpid()}"
     output.mkdir(parents=True)
@@ -33,7 +38,7 @@ def main():
     if sys.platform != "darwin":
         return finish("blocked", "This runner targets the configured macOS AU/VST3 build.", 2)
     if not (build / "CMakeCache.txt").is_file():
-        return finish("blocked", "Configure app/build with CMake before running verification.", 2)
+        return finish("blocked", f"Configure {build} with CMake before running verification.", 2)
 
     # Diagnose the actual capability before attributing a launch failure to DSP.
     # The same POSIX IPC path remains in use by the real host/worker tests.

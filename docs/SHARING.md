@@ -19,6 +19,11 @@ CADENCE_TEST_TMPDIR=/tmp ctest --test-dir app/build-release --output-on-failure
 python3 scripts/package-macos.py --build-dir app/build-release --configuration Release
 ```
 
+For subsequent source changes, rebuild and check the same release directory with
+`python3 scripts/verify-packaged.py --build-dir app/build-release`. To install its
+AU/VST3 bundles locally, run
+`bash scripts/install-built-plugins.sh Release app/build-release`.
+
 The packager verifies signatures and embedded helpers, then writes a zip and
 SHA-256 checksum under `dist/`. Upload these as GitHub Release assets. CI also
 builds and saves downloadable artifacts; it never publishes a release itself.

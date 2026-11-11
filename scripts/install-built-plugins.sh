@@ -4,8 +4,9 @@ set -euo pipefail
 
 project_root="$(cd "$(dirname "$0")/.." && pwd)"
 configuration="${1:-Debug}"
-artifacts="$project_root/app/build/Cadence_artefacts/$configuration"
-backup="$project_root/app/build/verification/plugin-install-$(date -u +%Y%m%dT%H%M%SZ)"
+build_dir="${2:-$project_root/app/build}"
+artifacts="$build_dir/Cadence_artefacts/$configuration"
+backup="$build_dir/verification/plugin-install-$(date -u +%Y%m%dT%H%M%SZ)"
 
 for source in "$artifacts/AU/Cadence.component" "$artifacts/VST3/Cadence.vst3"; do
     if [[ ! -d "$source" ]]; then
