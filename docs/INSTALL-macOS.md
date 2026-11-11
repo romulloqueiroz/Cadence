@@ -15,6 +15,27 @@ Create missing folders in Finder (Go → Go to Folder), then restart your DAW
 and rescan plugins if necessary. Sine Demo and Gain work without additional
 content. The standalone currently needs a MIDI input device.
 
+When installing a source build, use the repository's installer after quitting
+your DAW:
+
+```sh
+bash scripts/install-built-plugins.sh Release /absolute/path/to/platform/app/build-release
+```
+
+It backs up existing bundles, stages and verifies their replacements, refreshes
+your user's macOS Audio Unit registration, and checks that the registered AU
+version matches the installed bundle. Version 0.1.1 updates the host metadata
+after the sidechain addition. An older cached zero-input layout can leave Logic
+silent even though Cadence's rack loads. Reopen Logic after updating; if its
+plug-in manager still shows old information, reset and rescan **Cadence** there.
+Also check that the Cadence insert is enabled in the channel strip.
+
+To check the registered version independently:
+
+```sh
+python3 scripts/verify-au-registration.py
+```
+
 Development archives are ad-hoc signed, not Developer ID signed or notarized.
 macOS may block downloaded software. Only for a download you trust, follow
 macOS Privacy & Security's approval flow. If your Mac's policy still blocks it,

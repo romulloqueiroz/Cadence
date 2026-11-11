@@ -30,8 +30,10 @@ old tests and a green parser sweep do not qualify a new instrument or host.
 - [x] Release standalone/AU/VST3 build, CTest and AU validation pass.
 - [x] Extended paced realtime benchmark: 6000 callbacks at each of 64/128/256
   frames, zero underruns and healthy realtime workers.
-- [ ] Current Logic build: playback, bounce, automation, save/close/reopen and
-  recovered-library paths, followed by a session with several instances.
+- [x] Current Logic build: Sine/Gain playback, eight-note sample-aligned offline
+  bounce, and a second successful bounce after saving/reopening the project.
+- [ ] Current Logic build: automation and recovered-library paths, followed by
+  a representative session with several instances.
 - [ ] Long-session/storage/polyphony stress with representative supported content.
 - [x] AU/VST3 installation and matching bundled helper/signature checks pass.
 
@@ -40,22 +42,20 @@ require the current release candidate. Extend this matrix only for hosts/content
 that are actually tested. Unsupported large libraries need not be qualified for
 this subset; do not claim they are supported.
 
-Current evidence: `app/build-release/verification/v1-closure-2026-11-11/`.
-The disposable `Cadence-v1-Logic.logicx` copy loads the installed AU and its two
-Sine/Gain workers; transport runs. Its 16-second, eight-note offline bounce fails
-audio validation: peak `8.61e-10`, with no audible note segments. This remains an
-unresolved qualification failure, not a passing DAW check. Both the direct rack
-and the native AU wrapper render the project's legacy rack state successfully
-in isolated regression tests. Further Logic UI diagnosis is currently limited by
-window-focus failures with Logic's separate AU window. MIDI event-list delivery
-through the native AU wrapper also passes for MIDI 1 and MIDI 2. Logic's Event
-List confirms the expected eight channel-1 notes at velocity 100; adding the same
-region to Studio Grand produces an audible comparison bounce (peak `0.205`).
-This narrows the failure to the Cadence path in Logic; its cause is not yet
-established. Saving the disposable project in the current state format, closing
-and reopening it starts fresh workers, but its new bounce has the same near-zero
-peak. Project save/reopen succeeds structurally; audible recall is not qualified.
-The original projects were not modified.
+Content/recovery evidence: `app/build-release/verification/v1-closure-2026-11-11/`.
+Version 0.1.1 host/update evidence:
+`app/build-release/verification/logic-silence-2026-11-12/`.
+
+The previously silent Logic bounce is resolved. macOS and Logic had retained
+version 0.1.0's zero-input layout while the installed AU exposed a stereo
+sidechain. In-place bundle copying preserved an old bundle timestamp. The
+installer now replaces the complete bundle, refreshes user AU registration and
+verifies its version; the host-visible version is 0.1.1. The separate comparison
+project also had Cadence bypassed, so its power state was checked explicitly.
+The original failing project's clean-build bounce and its save/reopen bounce
+both contain all eight notes with zero-sample onset error and peak `0.05024`.
+Temporary tracing/default-rack diagnostics were removed before these passes.
+The original projects were not modified; verification uses disposable copies.
 
 ## 4. Distribution
 

@@ -4,6 +4,7 @@ import argparse
 import hashlib
 from pathlib import Path
 import platform
+import plistlib
 import shutil
 import subprocess
 import tempfile
@@ -17,13 +18,16 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--build-dir', type=Path, default=ROOT / 'app/build-release')
     parser.add_argument('--configuration', choices=['Release', 'Debug', 'RelWithDebInfo', 'MinSizeRel'], default='Release')
-    parser.add_argument('--version', default='0.1.0')
+    parser.add_argument('--version', help='Archive label; defaults to the built AU version')
     args = parser.parse_args()
     if platform.system() != 'Darwin':
         raise SystemExit('Packaging requires macOS (ditto, lipo and codesign).')
+    artifacts = args.build_dir.resolve() / 'Cadence_artefacts' / args.configuration
+    if args.version is None:
+        with (artifacts / 'AU/Cadence.component/Contents/Info.plist').open('rb') as stream:
+            args.version = plistlib.load(stream)['CFBundleShortVersionString']
     if not args.version or any(c not in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._-' for c in args.version):
         raise SystemExit('Version must contain only letters, digits, dots, underscores or hyphens.')
-    artifacts = args.build_dir.resolve() / 'Cadence_artefacts' / args.configuration
     bundles = [('AU', 'Cadence.component'), ('VST3', 'Cadence.vst3'), ('Standalone', 'Cadence.app')]
     architectures = set()
     for fmt, name in bundles:
