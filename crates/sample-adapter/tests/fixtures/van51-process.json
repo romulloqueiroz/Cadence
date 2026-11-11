@@ -1,0 +1,60 @@
+{
+  "origin": "Compiled saved Ghidra ProcessInt with mechanical vector/cast restoration; static replay only, not Kontakt runtime",
+  "source": "Kontakt-8-REA/pseudocode/functions/0x1005d55bc.c",
+  "source_sha256": "cc479cfa0552773de148e161f43920a6a76c8e85a7dd571e10bafdf964006c60",
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "analysis_profile": "040072c9c8ab8c896677a5e18badb276196ce107557bde41bc438752d586aebd",
+  "generator_sha256": "523e39e45cd0de65354eb24b89179e3020d9131900ab33ef35fa26a38862fc3d",
+  "native_generator_sha256": null,
+  "generated_cpp_sha256": "1f63e77ac3fbb2238b7deb8a7b9d32cb45e43eac594567c0b15bb6c3aae02f7e",
+  "setup_sha256": "1f1df85a643d04622f33625c7f90bc3925c48196162464c126db62ac0d7f1fb6",
+  "arithmetic": "float constants restored to binary32; FCVTXN round-to-odd narrowing; ffp-contract=off; scalar 1/x then frecps approximation",
+  "corrections": [
+    "Ghidra alias at channel+388: retain old390 before write; similarly +408 retains old410; native assembly 1005d654c..6560 confirms ordinary history shift"
+  ],
+  "fixture_cases": [
+    {
+      "name": "synthetic-0",
+      "frames": 512,
+      "mono": false,
+      "initial_sha256": "f31c3e768f7d1143bf5ae3b26911eb389c88eb73883224697f72e976f700726a",
+      "input_sha256": "f42ee763d4d325f6470c0668b7a23f806dd5dcbcd9ef108c9d9b87bb44c84f6e",
+      "output_sha256": "086d7ece537e70ae868463b66eeed5fd45cd362fe67a216898789db72556add5",
+      "final_state_sha256": "d3bb202cf82224b383f24e3b4b29ae8b45133259bf2be6e57c4f375f34fd4f41"
+    },
+    {
+      "name": "synthetic-1",
+      "frames": 113,
+      "mono": false,
+      "initial_sha256": "803879338328de4360fda21bbe4db17ceef5908335455c2c23556c5fbbe114c0",
+      "input_sha256": "3e93a99ee212971e6959421cb3d9e98a5f2a8843e5c8e8fd973467fd56849a5e",
+      "output_sha256": "4b45e4ffcbd7707f118ae1574cbc91fb0d6b34f4504a007fea5f2a7dafcb70a5",
+      "final_state_sha256": "ffb816766c1ea6eeea9e17989f1ddc0635fafef07bbdba98382a732c7ba06511"
+    },
+    {
+      "name": "synthetic-2",
+      "frames": 137,
+      "mono": false,
+      "initial_sha256": "7e9dbd8d7302daefd2bfe16ab96c8f546c3d93079719eafa9f349919ee77e3ef",
+      "input_sha256": "f95f89668b26eca493f967b2c49ae33c459214ffa817a58a6378ece10aac226b",
+      "output_sha256": "5e6c563b07df6d5f73b3b756dc4b7d64b484cf77e88d996f03795591bbcbf4eb",
+      "final_state_sha256": "5453469ede6a1bf54b8f65156dbeca37292b2ca71e88193a080b209a8a090f5c"
+    },
+    {
+      "name": "synthetic-3",
+      "frames": 64,
+      "mono": true,
+      "initial_sha256": "435a52ecaed88f5bb81d353f7539cdb339c889d3b56907d849ff507017218faa",
+      "input_sha256": "f5aa3d6cb6602a085e0e6bafc21f3e40e78fc21e1e89d9aff0ee104eca089f19",
+      "output_sha256": "4f13f148233a9c64653f8b8f52c2e4b21854450ed37ec0e17534ed153be23d61",
+      "final_state_sha256": "13f0d681a16aebc54b51e9824bbf663531409550ed62781ff23836c701eeb910"
+    }
+  ],
+  "fixture_schema": "VANPROC1 +u32case_count; each case u32frames,initial_state[0xa000],perframe[inputL,inputR,expectedL,expectedR]f32LE,final_state[0xa000]",
+  "schema": "input/output interleaved stereo f32 LE (1..1024 frames); state is 40960 raw bytes; table/input pointer slots rebound locally and zeroed on export",
+  "limitations": [
+    "Initial coefficient/current snapshots are explicit circuit inputs; synthetic cases use arbitrary stable coefficients and do not validate SetVan51/SetSampleRate",
+    "Compiled pseudocode replay, scalar non-fused arithmetic with explicit FCVTXN narrowing; no original ProcessInt execution"
+  ],
+  "fixture_sha256": "606f42cd2a75def5d2aa4f2b7246eb08a5b6c2bff8c5aed934d9159935d80b75"
+}

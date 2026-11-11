@@ -1,0 +1,31 @@
+{
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "method": "Original isolated macOS ARM64 numerical functions; digest-checked private RW image changed to RX; ExpTable populated from rounded f32 bases/slopes; libc bzero/memcpy imports bound; curve getter and initially empty base reset callbacks only",
+  "functions": {
+    "initialize": "0x1005d77c4",
+    "rate": "0x1005d7dcc",
+    "reset": "0x1005d8494",
+    "setter": "0x1005d85d8",
+    "process_int": "0x1005d8b0c",
+    "start_smooth": "0x1006164a8"
+  },
+  "curve_addresses": [
+    "0x104d44f00",
+    "0x104d45f00",
+    "0x104d43f00",
+    "0x104d44700",
+    "0x104d45700"
+  ],
+  "generator_sha256": "9026fe9e7bff8bfd59b22157fbb450fca1e3a05843a14526bd8617e93c12b46a",
+  "outputs": {
+    "acbox-native.bin": "f157f2627937988c1979bb305db9151e308ac70d609ff1ecd90d8a8cbf7f9b8c",
+    "acbox-live-native.bin": "65f5fffbeeab688fb5c0d8c4ebce47f897078b33abd76e5d4f20202f9985b536",
+    "acbox-rate-native.bin": "2d305e9ff0cac4a73fcfe55975610a34e0163494d1391f73fb6b356522da861e",
+    "acbox-initialize.bin": "3909fed2919ae17062ccb9edef61b81cad28454dddbc48543357d2efe1e5a8a9"
+  },
+  "limitations": [
+    "No application/plugin entry point or native host lifecycle executed",
+    "Control wrapper countdown reproduced; actual startSmooth and ProcessInt instructions executed",
+    "Curve getters return the selected immutable original curves; empty base reset callback applies only to initially zeroed histories"
+  ]
+}

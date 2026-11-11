@@ -1,0 +1,24 @@
+# Reproducible dependencies and build products
+/target/
+/app/build*/
+/vendor/JUCE/
+/dist/
+# Local reports and handoff notes
+/SESSION-HANDOFF.md
+/pipeline-benchmark.json
+# OS/editor/Python caches
+.DS_Store
+__pycache__/
+*.py[cod]
+.idea/
+.vscode/
+# Credentials and signing material
+.env
+.env.*
+!.env.example
+/keys/
+*.p12
+*.p8
+*.key
+*.mobileprovision
+# Do not blanket-ignore .bin or audio: some are required source/test assets.

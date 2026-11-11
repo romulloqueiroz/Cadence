@@ -1,0 +1,18 @@
+{
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "functions": [
+    "0x1019eb704",
+    "0x1019eb950",
+    "0x1019ebb9c",
+    "0x1019ebff8",
+    "0x1019d4708",
+    "0x1019d5e18"
+  ],
+  "method": "Original selected model-data initializers, constructor and onInit; typed numerical state and heap data, self/image pointers canonicalized. No executable bytes retained.",
+  "initial_bytes": 25344,
+  "initial_sha256": "e6b563eae9946ed9b3ef752b602bae5e49d40da7c23f4aa7aed89a974a2c00da",
+  "canonical_constants_sha256": "6de37b8f0a56c3c1161f3a6f9a154c31e669d4727d6a5ad9778436b174b715bf",
+  "limitations": [
+    "Selected numerical initialization only; no plugin loader, application entry point or native UI"
+  ]
+}

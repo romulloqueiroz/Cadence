@@ -1,0 +1,438 @@
+{
+  "0x1019d751c": {
+    "rust": "set_parameter",
+    "symbols": [
+      "__ZN2ni9effektrig3dsp13epianopreamps13EPianoPreamps12setParameterEjf"
+    ]
+  },
+  "0x1019d8630": {
+    "rust": "control_rate",
+    "symbols": [
+      "__ZN2ni9effektrig3dsp13epianopreamps13EPianoPreamps18processControlRateEv"
+    ]
+  },
+  "0x1019d8a28": {
+    "rust": "change_modes",
+    "symbols": [
+      "__ZN2ni9effektrig3dsp13epianopreamps13EPianoPreamps11changeModesEv"
+    ]
+  },
+  "0x1019d918c": {
+    "rust": "process",
+    "symbols": [
+      "__ZN2ni9effektrig3dsp13epianopreamps13EPianoPreamps20processAudioInternalEPKPKfPKPfj"
+    ]
+  },
+  "0x1019df718": {
+    "rust": "set_rate",
+    "symbols": [
+      "__ZN2ni9effektrig3dsp13epianopreamps13EPianoPreamps23onSetSampleRateInternalEffi"
+    ]
+  },
+  "0x1019e0f98": {
+    "rust": "suspend",
+    "symbols": [
+      "__ZN2ni9effektrig3dsp13epianopreamps13EPianoPreamps9onSuspendEv"
+    ]
+  },
+  "0x1019e10a8": {
+    "rust": "reset",
+    "symbols": [
+      "__ZN2ni9effektrig3dsp13epianopreamps13EPianoPreamps7onResetEv"
+    ]
+  },
+  "0x1019ceb04": {
+    "rust": "f_1019ceb04",
+    "symbols": [
+      "__ZN2ni9effektrig7utility10lfo_shaper15triangle_shaperIdEET_S4_"
+    ]
+  },
+  "0x1019ceb20": {
+    "rust": "f_1019ceb20",
+    "symbols": [
+      "__ZN2ni9effektrig7utility10lfo_shaper11sine_shaperIdEET_S4_"
+    ]
+  },
+  "0x1019dd1f4": {
+    "rust": "f_1019dd1f4",
+    "symbols": [
+      "__ZN2ni9effektrig3dsp13epianopreamps7CP70BEQ7processEf"
+    ]
+  },
+  "0x1019dd388": {
+    "rust": "f_1019dd388",
+    "symbols": [
+      "__ZN2ni9effektrig3dsp13epianopreamps13PianetTremolo7processENSt3__15arrayIfLm2EEE"
+    ]
+  },
+  "0x1019e1cfc": {
+    "rust": "f_1019e1cfc",
+    "symbols": [
+      "__ZN2ni9effektrig7utility10lfo_shaper13square_shaperIfEET_S4_"
+    ]
+  },
+  "0x1019e1dd8": {
+    "rust": "f_1019e1dd8",
+    "symbols": [
+      "__ZNSt3__110__function6__funcIPFffENS_9allocatorIS3_EES2_ED1Ev"
+    ]
+  },
+  "0x1019e1ddc": {
+    "rust": "f_1019e1ddc",
+    "symbols": [
+      "__ZNSt3__110__function6__funcIPFffENS_9allocatorIS3_EES2_ED0Ev"
+    ]
+  },
+  "0x1019e1de0": {
+    "rust": "f_1019e1de0",
+    "symbols": [
+      "__ZNKSt3__110__function6__funcIPFffENS_9allocatorIS3_EES2_E7__cloneEv"
+    ]
+  },
+  "0x1019e1e18": {
+    "rust": "f_1019e1e18",
+    "symbols": [
+      "__ZNKSt3__110__function6__funcIPFffENS_9allocatorIS3_EES2_E7__cloneEPNS0_6__baseIS2_EE"
+    ]
+  },
+  "0x1019e1e30": {
+    "rust": "f_1019e1e30",
+    "symbols": [
+      "__ZNSt3__110__function6__funcIPFffENS_9allocatorIS3_EES2_E7destroyEv"
+    ]
+  },
+  "0x1019e1e34": {
+    "rust": "f_1019e1e34",
+    "symbols": [
+      "__ZNSt3__110__function6__funcIPFffENS_9allocatorIS3_EES2_E18destroy_deallocateEv"
+    ]
+  },
+  "0x1019e1e38": {
+    "rust": "f_1019e1e38",
+    "symbols": [
+      "__ZNSt3__110__function6__funcIPFffENS_9allocatorIS3_EES2_EclEOf"
+    ]
+  },
+  "0x1019e1e44": {
+    "rust": "f_1019e1e44",
+    "symbols": [
+      "__ZNKSt3__110__function6__funcIPFffENS_9allocatorIS3_EES2_E6targetERKSt9type_info"
+    ]
+  },
+  "0x1019e1ec0": {
+    "rust": "f_1019e1ec0",
+    "symbols": [
+      "__ZNKSt3__110__function6__funcIPFffENS_9allocatorIS3_EES2_E11target_typeEv"
+    ]
+  },
+  "0x1019e222c": {
+    "rust": "f_1019e222c",
+    "symbols": [
+      "__ZN2ni9effektrig7utility10lfo_shaper11sine_shaperIfEET_S4_"
+    ]
+  },
+  "0x1019e2288": {
+    "rust": "f_1019e2288",
+    "symbols": [
+      "__ZN2ni9effektrig7utility10lfo_shaper15triangle_shaperIfEET_S4_"
+    ]
+  },
+  "0x1019e9514": {
+    "rust": "f_1019e9514",
+    "symbols": [
+      "__ZN2ni9effektrig7utility10lfo_shaper14sawDown_shaperIfEET_S4_"
+    ]
+  },
+  "0x1019e9524": {
+    "rust": "f_1019e9524",
+    "symbols": [
+      "__ZN2ni9effektrig7utility10lfo_shaper12sawUp_shaperIfEET_S4_"
+    ]
+  },
+  "0x1019e9c38": {
+    "rust": "f_1019e9c38",
+    "symbols": [
+      "__ZNSt3__110__function6__funcIZN2ni9effektrig3dsp13epianopreamps13EPianoPreampsC1EvE3$_0NS_9allocatorIS7_EEFvvEEclEv"
+    ]
+  },
+  "0x1019e9dd4": {
+    "rust": "f_1019e9dd4",
+    "symbols": [
+      "__ZNSt3__110__function6__funcIZN2ni9effektrig3dsp13epianopreamps13EPianoPreampsC1EvE3$_1NS_9allocatorIS7_EEFvvEEclEv"
+    ]
+  },
+  "0x1019e9eac": {
+    "rust": "f_1019e9eac",
+    "symbols": [
+      "__ZNSt3__110__function6__funcIZN2ni9effektrig3dsp13epianopreamps13EPianoPreampsC1EvE3$_2NS_9allocatorIS7_EEFvvEEclEv"
+    ]
+  },
+  "0x1019e9f84": {
+    "rust": "f_1019e9f84",
+    "symbols": [
+      "__ZNSt3__110__function6__funcIZN2ni9effektrig3dsp13epianopreamps13EPianoPreampsC1EvE3$_3NS_9allocatorIS7_EEFvvEEclEv"
+    ]
+  },
+  "0x1019ea05c": {
+    "rust": "f_1019ea05c",
+    "symbols": [
+      "__ZNSt3__110__function6__funcIZN2ni9effektrig3dsp13epianopreamps13EPianoPreampsC1EvE3$_4NS_9allocatorIS7_EEFvvEEclEv"
+    ]
+  },
+  "0x1019ea134": {
+    "rust": "f_1019ea134",
+    "symbols": [
+      "__ZNSt3__110__function6__funcIZN2ni9effektrig3dsp13epianopreamps13EPianoPreampsC1EvE3$_5NS_9allocatorIS7_EEFvvEEclEv"
+    ]
+  },
+  "0x1019ea20c": {
+    "rust": "f_1019ea20c",
+    "symbols": [
+      "__ZNSt3__110__function6__funcIZN2ni9effektrig3dsp13epianopreamps13EPianoPreampsC1EvE3$_6NS_9allocatorIS7_EEFvvEEclEv"
+    ]
+  },
+  "0x1019ea33c": {
+    "rust": "f_1019ea33c",
+    "symbols": [
+      "__ZNSt3__110__function6__funcIZN2ni9effektrig3dsp13epianopreamps13EPianoPreampsC1EvE3$_7NS_9allocatorIS7_EEFvvEEclEv"
+    ]
+  },
+  "0x1019ea440": {
+    "rust": "f_1019ea440",
+    "symbols": [
+      "__ZNSt3__110__function6__funcIZN2ni9effektrig3dsp13epianopreamps13EPianoPreampsC1EvE3$_8NS_9allocatorIS7_EEFvvEEclEv"
+    ]
+  },
+  "0x1019ea5d4": {
+    "rust": "f_1019ea5d4",
+    "symbols": [
+      "__ZNSt3__110__function6__funcIZN2ni9effektrig3dsp13epianopreamps13EPianoPreampsC1EvE3$_9NS_9allocatorIS7_EEFvvEEclEv"
+    ]
+  },
+  "0x1019ea6c4": {
+    "rust": "f_1019ea6c4",
+    "symbols": [
+      "__ZNSt3__110__function6__funcIZN2ni9effektrig3dsp13epianopreamps13EPianoPreampsC1EvE4$_10NS_9allocatorIS7_EEFvvEEclEv"
+    ]
+  },
+  "0x1019d7a6c": {
+    "rust": "f_1019d7a6c",
+    "symbols": [
+      "__ZN2ni9effektrig3dsp13epianopreamps11TremoloBase9setSyncedEb"
+    ]
+  },
+  "0x1019e2e94": {
+    "rust": "f_1019e2e94",
+    "symbols": [
+      "__ZN2ni9effektrig3dsp13epianopreamps7JanusEQ18updateSystemMatrixEv"
+    ]
+  },
+  "0x10051e000": {
+    "rust": "f_10051e000",
+    "symbols": [
+      "__ZN2NI3DSP16SmoothingToolboxILi23EE9endSmoothEv"
+    ]
+  },
+  "0x1019dd550": {
+    "rust": "f_1019dd550",
+    "symbols": [
+      "__ZN2ni9effektrig3dsp13epianopreamps13EPianoPreamps18handleEQParametersEv"
+    ]
+  },
+  "0x1019ddd80": {
+    "rust": "f_1019ddd80",
+    "symbols": [
+      "__ZN2ni9effektrig3dsp13epianopreamps10ClavinetEQ16updateParametersEbbbb"
+    ]
+  },
+  "0x1019de610": {
+    "rust": "f_1019de610",
+    "symbols": [
+      "__ZN2ni9effektrig3dsp13epianopreamps12SynthTremolo15setTremoloShapeENS3_13TremoloShapesE"
+    ]
+  },
+  "0x1019c5198": {
+    "rust": "f_1019c5198",
+    "symbols": [
+      "__ZN5Eigen8internal21dense_assignment_loopINS0_31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS_5ArrayIfLi5ELi1ELi0ELi5ELi1EEELin1ELin1ELb0EEEEENS3_INS5_IfLi1ELi1ELi0ELi1ELi1EEEEENS0_9assign_opIffEELi0EEELi4ELi0EE3runERSD_",
+      "__ZN5Eigen8internal21dense_assignment_loopINS0_31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS_5ArrayIfLi5ELi1ELi0ELi5ELi1EEELin1ELin1ELb0EEEEENS3_INS5_IfLi2ELi1ELi0ELi2ELi1EEEEENS0_9assign_opIffEELi0EEELi4ELi0EE3runERSD_"
+    ]
+  },
+  "0x1019ea774": {
+    "rust": "f_1019ea774",
+    "symbols": [
+      "__ZN2ni9effektrig3dsp2ml13OutputNetworkINS1_11reussenzehn21ReussenzehnPreampData14output_networkEEclERKN5Eigen3RefIKNS8_5ArrayIfLi5ELi1ELi0ELi5ELi1EEELi0ENS8_11InnerStrideILi1EEEEE"
+    ]
+  },
+  "0x1019ea98c": {
+    "rust": "f_1019ea98c",
+    "symbols": [
+      "__ZN2ni9effektrig3dsp2ml13OutputNetworkINS1_5ampeg15AmpegPreampData14output_networkEEclERKN5Eigen3RefIKNS8_5ArrayIfLi5ELi1ELi0ELi5ELi1EEELi0ENS8_11InnerStrideILi1EEEEE"
+    ]
+  },
+  "0x1019c31b8": {
+    "rust": "f_1019c31b8",
+    "symbols": [
+      "__ZN5Eigen8internal21dense_assignment_loopINS0_31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS_5ArrayIfLi9ELi1ELi0ELi9ELi1EEELin1ELin1ELb0EEEEENS3_INS5_IfLi1ELi1ELi0ELi1ELi1EEEEENS0_9assign_opIffEELi0EEELi4ELi0EE3runERSD_",
+      "__ZN5Eigen8internal21dense_assignment_loopINS0_31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS_5ArrayIfLi9ELi1ELi0ELi9ELi1EEELin1ELin1ELb0EEEEENS3_INS5_IfLi5ELi1ELi0ELi5ELi1EEEEENS0_9assign_opIffEELi0EEELi4ELi0EE3runERSD_"
+    ]
+  },
+  "0x1019c43d8": {
+    "rust": "f_1019c43d8",
+    "symbols": [
+      "__ZN5Eigen8internal29general_matrix_vector_productIlfNS0_22const_blas_data_mapperIflLi0EEELi0ELb0EfNS2_IflLi1EEELb0ELi0EE3runEllRKS3_RKS4_Pflf"
+    ]
+  },
+  "0x1019eb12c": {
+    "rust": "f_1019eb12c",
+    "symbols": [
+      "__ZN2ni9effektrig3dsp2ml3GRUINS1_7sa2rate11Sa2rateData13state_networkEE7processERKN5Eigen3RefINS8_5ArrayIfLi1ELi1ELi0ELi1ELi1EEELi0ENS8_11InnerStrideILi1EEEEERKNS9_INSA_IfLi8ELi1ELi0ELi8ELi1EEELi0ESD_EE"
+    ]
+  },
+  "0x1019eaba4": {
+    "rust": "f_1019eaba4",
+    "symbols": [
+      "__ZN2ni9effektrig3dsp2ml3GRUINS1_10color15ips14Color15IpsData13state_networkEE7processERKN5Eigen3RefINS8_5ArrayIfLi1ELi1ELi0ELi1ELi1EEELi0ENS8_11InnerStrideILi1EEEEERKNS9_INSA_IfLi8ELi1ELi0ELi8ELi1EEELi0ESD_EE"
+    ]
+  },
+  "0x1019e84a0": {
+    "rust": "f_1019e84a0",
+    "symbols": [
+      "__ZN2ni9effektrig7utility16TempoSyncableLFOIfE7processEv"
+    ]
+  },
+  "0x101b87e54": {
+    "rust": "f_101b87e54",
+    "symbols": [
+      "__ZN2NI3DSP2EQ9setParamsEfffNS1_5ModesEf"
+    ]
+  },
+  "0x1019df214": {
+    "rust": "f_1019df214",
+    "symbols": [
+      "__ZN2ni9effektrig3dsp13epianopreamps7CP70BEQ16updateParametersEfff"
+    ]
+  },
+  "0x101ea9910": {
+    "rust": "f_101ea9910",
+    "symbols": [
+      "__ZN2NI2AB19SampleRateConverter16resetAllChannelsEv"
+    ]
+  },
+  "0x1019e14f8": {
+    "rust": "f_1019e14f8",
+    "symbols": [
+      "__ZN2ni9effektrig3dsp13epianopreamps13EPianoPreamps27handleTremoloSpeedParameterEv"
+    ]
+  },
+  "0x1019e3324": {
+    "rust": "f_1019e3324",
+    "symbols": [
+      "__ZN5Eigen8internal15compute_inverseINS_6MatrixIdLi6ELi6ELi0ELi6ELi6EEES3_Li6EE3runERKS3_RS3_"
+    ]
+  },
+  "0x1019e8208": {
+    "rust": "f_1019e8208",
+    "symbols": [
+      "__ZN5Eigen8internal15call_assignmentINS_6MatrixIdLi6ELi6ELi0ELi6ELi6EEENS_7ProductIS3_S3_Li0EEENS0_9assign_opIddEEEEvRT_RKT0_RKT1_NS0_9enable_ifIXsr25evaluator_assume_aliasingISA_EE5valueEPvE4typeE"
+    ]
+  },
+  "0x1019e85e0": {
+    "rust": "f_1019e85e0",
+    "symbols": [
+      "__ZN5Eigen8internal10AssignmentINS_6MatrixIdLi7ELi7ELi0ELi7ELi7EEENS_7InverseINS_13CwiseBinaryOpINS0_20scalar_difference_opIddEEKS3_S8_EEEENS0_9assign_opIddEENS0_11Dense2DenseEvE3runERS3_RKSA_RKSC_"
+    ]
+  },
+  "0x1019e90f8": {
+    "rust": "f_1019e90f8",
+    "symbols": [
+      "__ZN5Eigen8internal15call_assignmentINS_6MatrixIdLi7ELi7ELi0ELi7ELi7EEENS_7ProductIS3_NS_13CwiseBinaryOpINS0_13scalar_sum_opIddEEKS3_S8_EELi0EEENS0_9assign_opIddEEEEvRT_RKT0_RKT1_NS0_9enable_ifIXsr25evaluator_assume_aliasingISF_EE5valueEPvE4typeE"
+    ]
+  },
+  "0x101a3d23c": {
+    "rust": "f_101a3d23c",
+    "symbols": [
+      "__ZN2ni9effektrig7utility21tempo_sync_converters6detail27getFrequencyConstantForModeENS1_13TempoSyncModeE"
+    ]
+  },
+  "0x1019e357c": {
+    "rust": "f_1019e357c",
+    "symbols": [
+      "__ZN5Eigen12PartialPivLUINS_6MatrixIdLi6ELi6ELi0ELi6ELi6EEEE7computeEv"
+    ]
+  },
+  "0x1019e40b8": {
+    "rust": "f_1019e40b8",
+    "symbols": [
+      "__ZN5Eigen8internal23triangular_solve_matrixIdlLi1ELi5ELb0ELi0ELi0ELi1EE3runEllPKdlPdllRNS0_15level3_blockingIddEE"
+    ]
+  },
+  "0x1019e72c4": {
+    "rust": "f_1019e72c4",
+    "symbols": [
+      "__ZN5Eigen8internal23triangular_solve_matrixIdlLi1ELi2ELb0ELi0ELi0ELi1EE3runEllPKdlPdllRNS0_15level3_blockingIddEE"
+    ]
+  },
+  "0x1019e8794": {
+    "rust": "f_1019e8794",
+    "symbols": [
+      "__ZN5Eigen12PartialPivLUINS_6MatrixIdLi7ELi7ELi0ELi7ELi7EEEE7computeEv"
+    ]
+  },
+  "0x1019e8f14": {
+    "rust": "f_1019e8f14",
+    "symbols": [
+      "__ZNK5Eigen12PartialPivLUINS_6MatrixIdLi7ELi7ELi0ELi7ELi7EEEE11_solve_implINS_14CwiseNullaryOpINS_8internal18scalar_identity_opIdEES2_EES2_EEvRKT_RT0_"
+    ]
+  },
+  "0x1019e935c": {
+    "rust": "f_1019e935c",
+    "symbols": [
+      "__ZN5Eigen8internal21dense_assignment_loopINS0_31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIdLi7ELi7ELi0ELi7ELi7EEEEENS3_INS_7ProductIS5_NS_13CwiseBinaryOpINS0_13scalar_sum_opIddEEKS5_SB_EELi1EEEEENS0_9assign_opIddEELi0EEELi4ELi1EE3runERSH_"
+    ]
+  },
+  "0x1019e3760": {
+    "rust": "f_1019e3760",
+    "symbols": [
+      "__ZN5Eigen8internal15partial_lu_implIdLi0EiLi6EE12unblocked_luERNS_3RefINS_6MatrixIdLi6ELi6ELi0ELi6ELi6EEELi0ENS_11OuterStrideILin1EEEEEPiRi"
+    ]
+  },
+  "0x1019e4e40": {
+    "rust": "f_1019e4e40",
+    "symbols": [
+      "__ZN5Eigen8internal13gemm_pack_rhsIdlNS0_16blas_data_mapperIdlLi0ELi0ELi1EEELi4ELi0ELb0ELb1EEclEPdRKS3_llll"
+    ]
+  },
+  "0x1019e5438": {
+    "rust": "f_1019e5438",
+    "symbols": [
+      "__ZN5Eigen8internal13gemm_pack_lhsIdlNS0_22const_blas_data_mapperIdlLi0EEELi6ELi2E19__simd128_float64_tLi0ELb0ELb0EEclEPdRKS3_llll"
+    ]
+  },
+  "0x1019e5850": {
+    "rust": "f_1019e5850",
+    "symbols": [
+      "__ZN5Eigen8internal11gebp_kernelIddlNS0_16blas_data_mapperIdlLi0ELi0ELi1EEELi6ELi4ELb0ELb0EEclERKS3_PKdS8_llldllll"
+    ]
+  },
+  "0x1019e8a24": {
+    "rust": "f_1019e8a24",
+    "symbols": [
+      "__ZN5Eigen8internal15partial_lu_implIdLi0EiLi7EE12unblocked_luERNS_3RefINS_6MatrixIdLi7ELi7ELi0ELi7ELi7EEELi0ENS_11OuterStrideILin1EEEEEPiRi"
+    ]
+  },
+  "0x1019e3c14": {
+    "rust": "f_1019e3c14",
+    "symbols": [
+      "__ZN5Eigen8internal21dense_assignment_loopINS0_31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS_3RefINS_6MatrixIdLi5ELi5ELi0ELi5ELi5EEELi0ENS_11OuterStrideILin1EEEEELin1ELin1ELb0EEEEENS3_INS_7ProductINS4_INS4_ISA_Li5ELi1ELb1EEELin1ELi1ELb0EEENS4_INS4_ISA_Li1ELi5ELb0EEELi1ELin1ELb0EEELi1EEEEENS0_13sub_assign_opIddEELi0EEELi4ELi0EE3runERSM_",
+      "__ZN5Eigen8internal21dense_assignment_loopINS0_31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS_3RefINS_6MatrixIdLi6ELi6ELi0ELi6ELi6EEELi0ENS_11OuterStrideILin1EEEEELin1ELin1ELb0EEEEENS3_INS_7ProductINS4_INS4_ISA_Li6ELi1ELb1EEELin1ELi1ELb0EEENS4_INS4_ISA_Li1ELi6ELb0EEELi1ELin1ELb0EEELi1EEEEENS0_13sub_assign_opIddEELi0EEELi4ELi0EE3runERSM_",
+      "__ZN5Eigen8internal21dense_assignment_loopINS0_31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS_3RefINS_6MatrixIdLi7ELi7ELi0ELi7ELi7EEELi0ENS_11OuterStrideILin1EEEEELin1ELin1ELb0EEEEENS3_INS_7ProductINS4_INS4_ISA_Li7ELi1ELb1EEELin1ELi1ELb0EEENS4_INS4_ISA_Li1ELi7ELb0EEELi1ELin1ELb0EEELi1EEEEENS0_13sub_assign_opIddEELi0EEELi4ELi0EE3runERSM_"
+    ]
+  },
+  "0x1019e6e44": {
+    "rust": "f_1019e6e44",
+    "symbols": [
+      "__ZN5Eigen8internal22lhs_process_one_packetILi4ELl2ELl1Eddd19__simd128_float64_tS2_dS2_NS0_11gebp_traitsIddLb0ELb0ELi4ELi0EEENS0_16BlasLinearMapperIdlLi0ELi1EEENS0_16blas_data_mapperIdlLi0ELi0ELi1EEEEclERKS8_PKdSD_dllllllilllll"
+    ]
+  }
+}

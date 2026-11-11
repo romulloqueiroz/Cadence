@@ -1,0 +1,331 @@
+{
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "cases": [
+    {
+      "rate": 44100.0,
+      "values": [
+        0.5,
+        0.0,
+        0.0,
+        0.0,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "frames": 512
+    },
+    {
+      "rate": 44100.0,
+      "values": [
+        0.23,
+        1.0,
+        1.0,
+        1.0,
+        0.17,
+        0.31,
+        0.79,
+        0.91,
+        0.67,
+        0.83
+      ],
+      "frames": 512
+    },
+    {
+      "rate": 44100.0,
+      "values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "frames": 512
+    },
+    {
+      "rate": 44100.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "frames": 512
+    },
+    {
+      "rate": 48000.0,
+      "values": [
+        0.5,
+        0.0,
+        0.0,
+        0.0,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "frames": 512
+    },
+    {
+      "rate": 48000.0,
+      "values": [
+        0.23,
+        1.0,
+        1.0,
+        1.0,
+        0.17,
+        0.31,
+        0.79,
+        0.91,
+        0.67,
+        0.83
+      ],
+      "frames": 512
+    },
+    {
+      "rate": 48000.0,
+      "values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "frames": 512
+    },
+    {
+      "rate": 48000.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "frames": 512
+    },
+    {
+      "rate": 64000.0,
+      "values": [
+        0.5,
+        0.0,
+        0.0,
+        0.0,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "frames": 512
+    },
+    {
+      "rate": 64000.0,
+      "values": [
+        0.23,
+        1.0,
+        1.0,
+        1.0,
+        0.17,
+        0.31,
+        0.79,
+        0.91,
+        0.67,
+        0.83
+      ],
+      "frames": 512
+    },
+    {
+      "rate": 64000.0,
+      "values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "frames": 512
+    },
+    {
+      "rate": 64000.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "frames": 512
+    },
+    {
+      "rate": 88200.0,
+      "values": [
+        0.5,
+        0.0,
+        0.0,
+        0.0,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "frames": 512
+    },
+    {
+      "rate": 88200.0,
+      "values": [
+        0.23,
+        1.0,
+        1.0,
+        1.0,
+        0.17,
+        0.31,
+        0.79,
+        0.91,
+        0.67,
+        0.83
+      ],
+      "frames": 512
+    },
+    {
+      "rate": 88200.0,
+      "values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "frames": 512
+    },
+    {
+      "rate": 88200.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "frames": 512
+    },
+    {
+      "rate": 96000.0,
+      "values": [
+        0.5,
+        0.0,
+        0.0,
+        0.0,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "frames": 512
+    },
+    {
+      "rate": 96000.0,
+      "values": [
+        0.23,
+        1.0,
+        1.0,
+        1.0,
+        0.17,
+        0.31,
+        0.79,
+        0.91,
+        0.67,
+        0.83
+      ],
+      "frames": 512
+    },
+    {
+      "rate": 96000.0,
+      "values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "frames": 512
+    },
+    {
+      "rate": 96000.0,
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "frames": 512
+    }
+  ],
+  "sha256": "a87002c3801c46b0aa0230632b991f5bfa43d7e94afbd0b828cec6e85b9858fd",
+  "method": "Isolated original BassInvader numerical constructor/rate/DRU circuit oracle.\nPrivate SHA-bound image; RX text and RW private data. A branch bypasses C++\nstd::function registration, while its10 numeric callbacks are called explicitly.\nOnly libc numerical/memory imports are bound; no app/plugin entry point runs.\n",
+  "limitations": [
+    "Core numerical behavior only; constructor C++ callback registration bypassed by branch and explicit numeric callbacks",
+    "No wrapper SRC or host rendering in this fixture"
+  ]
+}

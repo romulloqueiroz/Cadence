@@ -1,0 +1,78 @@
+{
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "method": "Capture scalar state/data and original NI::AB converter outputs.\n\nOnly power-of-two stereo conversion configurations are retained. Their canonical\naddresses are data indices for reconstructed Rust source, never executable bytes.\n",
+  "cases": [
+    {
+      "exponent": -4,
+      "state_bytes": 7808,
+      "input_frames": 1024,
+      "output_frames": 64,
+      "allocations": 8
+    },
+    {
+      "exponent": -3,
+      "state_bytes": 6272,
+      "input_frames": 1024,
+      "output_frames": 128,
+      "allocations": 8
+    },
+    {
+      "exponent": -2,
+      "state_bytes": 5504,
+      "input_frames": 1024,
+      "output_frames": 256,
+      "allocations": 8
+    },
+    {
+      "exponent": -1,
+      "state_bytes": 5120,
+      "input_frames": 1024,
+      "output_frames": 512,
+      "allocations": 8
+    },
+    {
+      "exponent": 0,
+      "state_bytes": 4096,
+      "input_frames": 1024,
+      "output_frames": 1024,
+      "allocations": 0
+    },
+    {
+      "exponent": 1,
+      "state_bytes": 5120,
+      "input_frames": 1024,
+      "output_frames": 2048,
+      "allocations": 8
+    },
+    {
+      "exponent": 2,
+      "state_bytes": 5504,
+      "input_frames": 1024,
+      "output_frames": 4096,
+      "allocations": 8
+    },
+    {
+      "exponent": 3,
+      "state_bytes": 6272,
+      "input_frames": 1024,
+      "output_frames": 8192,
+      "allocations": 8
+    },
+    {
+      "exponent": 4,
+      "state_bytes": 7808,
+      "input_frames": 1024,
+      "output_frames": 16384,
+      "allocations": 8
+    }
+  ],
+  "snapshot_base": "0x10000000000",
+  "blob_sha256": "633ba181368d00090764ef36541157f0252a738b0c5e98d539a89b35e2a8a68b",
+  "functions": [
+    "0x101ea7aa0",
+    "0x101ea9770"
+  ],
+  "limitations": [
+    "Isolated converter only; no full instrument or host validation"
+  ]
+}

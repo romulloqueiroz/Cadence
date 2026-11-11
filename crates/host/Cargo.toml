@@ -1,0 +1,14 @@
+[package]
+name = "host"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "Reference host: block scheduling, offline rendering and WAV output"
+
+[dependencies]
+plugin-api = { path = "../plugin-api" }
+
+[[bin]]
+name = "host-demo"
+path = "src/bin/host-demo.rs"

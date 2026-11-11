@@ -1,0 +1,32 @@
+{
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "functions": [
+    "0x1005cdc34",
+    "0x1005d4fe0",
+    "0x1005cf318"
+  ],
+  "rate": 48000,
+  "values": [
+    0.5,
+    0.5,
+    0.5,
+    0.5,
+    0.5,
+    0.5,
+    0.5,
+    0.5
+  ],
+  "flags": [
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "method": "Original isolated ARM64 Initialize, SetVan51, Reset; explicit curve getters and empty base reset; recovered constructor scalar constants",
+  "limitations": [
+    "Not application/plugin initialization; base history reset is a no-op on the initially zeroed state"
+  ],
+  "snapshot_sha256": "312b6f0253e9b6903b3b03a81a75715692aff22bebf9171b27cc4113cff6434d",
+  "generator_sha256": "7fb181641110aaeaafdc2a92d2003c42ef119422da4ccb456d349850ab1007e9"
+}

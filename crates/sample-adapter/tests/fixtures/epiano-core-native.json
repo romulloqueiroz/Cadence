@@ -1,0 +1,10 @@
+{
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "cases": 21,
+  "frames_per_case": 512,
+  "sha256": "95264862cb36646593586c9e835098471a5d49df16f4645b8a3ff0ac86a68b53",
+  "method": "Native EP core rate/parameter/suspend/reset/control/audio goldens.",
+  "limitations": [
+    "Internal core rate, without the separate input/output rate converters or Kontakt host"
+  ]
+}

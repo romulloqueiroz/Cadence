@@ -1,0 +1,21 @@
+[package]
+name = "plugin-store"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "Signed plugin install store, scanning and provider"
+
+[dependencies]
+plugin-api = { path = "../plugin-api" }
+plugin-package = { path = "../plugin-package" }
+plugin-discovery = { path = "../plugin-discovery" }
+plugin-sandbox = { path = "../plugin-sandbox" }
+host = { path = "../host" }
+ed25519-dalek = { version = "2", features = ["rand_core"] }
+rand_core = { version = "0.6", features = ["getrandom"] }
+hex = "0.4"
+
+[[bin]]
+name = "platform"
+path = "src/bin/platform.rs"

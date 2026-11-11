@@ -1,0 +1,16 @@
+[package]
+name = "adapter-clap"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "CLAP plugin hosting adapter for the universal protocol"
+
+[dependencies]
+plugin-api = { path = "../plugin-api" }
+clap-sys = "0.5"
+libc = "0.2"
+
+[[bin]]
+name = "clap-inspect"
+path = "src/bin/clap-inspect.rs"

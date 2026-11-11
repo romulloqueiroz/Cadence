@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!-- Independently authored format fixture. No vendor samples or preset data. -->
+<K2_Container name="XML fixture" type="single_program" version="0.50">
+  <Programs><K2_Program index="0" name="XML &amp; Playback" version="0.80">
+    <Parameters>
+      <V name="volume" value="0.5"/><V name="pan" value="0.1"/>
+      <V name="tune" value="1"/><V name="transpose" value="12"/>
+    </Parameters>
+    <Groups>
+      <K2_Group index="17" name="Pedal Release is just a display name">
+        <Parameters>
+          <V name="volume" value="0.8"/><V name="pan" value="-0.3"/><V name="tune" value="1.25"/>
+          <V name="keyTracking" value="yes"/><V name="releaseTrigger" value="no"/>
+        </Parameters><GroupStart/>
+      </K2_Group>
+      <K2_Group index="3" name="Actual release">
+        <Parameters><V name="releaseTrigger" value="yes"/><V name="zoneUnused" value="ignored"/></Parameters>
+      </K2_Group>
+    </Groups>
+    <Zones>
+      <K2_Zone index="42" groupIdx="17"><Parameters>
+        <V name="sampleStart" value="3"/><V name="sampleEnd" value="9"/>
+        <V name="lowKey" value="60"/><V name="highKey" value="72"/><V name="rootKey" value="60"/>
+        <V name="lowVelocity" value="10"/><V name="highVelocity" value="120"/>
+        <V name="zoneVolume" value="0.25"/><V name="zonePan" value="0.2"/><V name="zoneTune" value="0.8"/>
+      </Parameters><Sample><V name="file_ex2" value="@d007Samplesf000000tone%0020%03A9.wav"/></Sample></K2_Zone>
+      <K2_Zone index="2" groupIdx="3"><Parameters>
+        <V name="lowKey" value="60"/><V name="highKey" value="72"/><V name="rootKey" value="60"/>
+      </Parameters><Sample><V name="file_ex2" value="Samples\tone Ω.wav"/></Sample></K2_Zone>
+    </Zones>
+  </K2_Program></Programs>
+</K2_Container>

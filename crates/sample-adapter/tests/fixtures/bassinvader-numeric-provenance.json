@@ -1,0 +1,171 @@
+{
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "method": "Decoded original ARM64 operations emitted as Rust scalar/SIMD arithmetic and control flow; no executable bytes shipped",
+  "functions": {
+    "0x1019bdc84": {
+      "name": "construct",
+      "instructions": 1029
+    },
+    "0x1019bf044": {
+      "name": "process",
+      "instructions": 657
+    },
+    "0x1019bfa88": {
+      "name": "smooth",
+      "instructions": 180
+    },
+    "0x1019bfd58": {
+      "name": "boost",
+      "instructions": 185
+    },
+    "0x1019c003c": {
+      "name": "bass_treble",
+      "instructions": 282
+    },
+    "0x1019c04a4": {
+      "name": "rate",
+      "instructions": 363
+    },
+    "0x1019c0a50": {
+      "name": "stabilize",
+      "instructions": 1089
+    },
+    "0x1019c2228": {
+      "name": "parameter0",
+      "instructions": 74
+    },
+    "0x1019c2420": {
+      "name": "parameter1",
+      "instructions": 45
+    },
+    "0x1019c25a4": {
+      "name": "parameter2",
+      "instructions": 45
+    },
+    "0x1019c2728": {
+      "name": "parameter3",
+      "instructions": 45
+    },
+    "0x1019c28ac": {
+      "name": "parameter4",
+      "instructions": 7
+    },
+    "0x1019c2998": {
+      "name": "parameter5",
+      "instructions": 7
+    },
+    "0x1019c2a84": {
+      "name": "parameter6",
+      "instructions": 4
+    },
+    "0x1019c2b64": {
+      "name": "parameter7",
+      "instructions": 28
+    },
+    "0x1019c2ca4": {
+      "name": "parameter8",
+      "instructions": 4
+    },
+    "0x1019c2d84": {
+      "name": "parameter9",
+      "instructions": 4
+    },
+    "0x1019c2e0c": {
+      "name": "assign5",
+      "instructions": 235
+    },
+    "0x1019c31b8": {
+      "name": "assign9",
+      "instructions": 220
+    },
+    "0x1019c3528": {
+      "name": "input_output",
+      "instructions": 167
+    },
+    "0x1019c37c4": {
+      "name": "input_dru",
+      "instructions": 163
+    },
+    "0x1019c3a50": {
+      "name": "input_mat",
+      "instructions": 247
+    },
+    "0x1019c3e2c": {
+      "name": "assign4",
+      "instructions": 199
+    },
+    "0x1019c4148": {
+      "name": "himid_output",
+      "instructions": 164
+    },
+    "0x1019c43d8": {
+      "name": "matrix",
+      "instructions": 415
+    },
+    "0x1019c4a54": {
+      "name": "himid_dru",
+      "instructions": 245
+    },
+    "0x1019c4e28": {
+      "name": "himid_mat",
+      "instructions": 220
+    },
+    "0x1019c5198": {
+      "name": "assign_lomid",
+      "instructions": 220
+    },
+    "0x1019c5508": {
+      "name": "lomid_dru",
+      "instructions": 185
+    },
+    "0x1019c57ec": {
+      "name": "lomid_mat",
+      "instructions": 245
+    },
+    "0x1019c5bc0": {
+      "name": "power_output",
+      "instructions": 155
+    },
+    "0x1019c5e2c": {
+      "name": "leak3",
+      "instructions": 206
+    },
+    "0x1019c6164": {
+      "name": "leak4",
+      "instructions": 257
+    },
+    "0x101b87e54": {
+      "name": "eq",
+      "instructions": 146
+    },
+    "0x101b8993c": {
+      "name": "eq_ctor",
+      "instructions": 9
+    },
+    "0x1004ffc1c": {
+      "name": "start_smooth",
+      "instructions": 285
+    }
+  },
+  "instructions": 8031,
+  "constant_pages": [
+    "0x104583000",
+    "0x104cc7000",
+    "0x1073e1000",
+    "0x1073e2000",
+    "0x1073e3000",
+    "0x109636000",
+    "0x10969a000",
+    "0x109759000",
+    "0x109db5000"
+  ],
+  "generator_sha256": "5e53b7b0a60118909438c562129f54772e96c6b79d038979bc5a7e9c0d820496",
+  "numeric_source_sha256": "b31679e0af80809a6be1487ec3c25c798a420152b1c654a032569df5419ce592",
+  "constants_sha256": "7ecf02124d67efffdbbdfd50b3fbe20bc28cb01701c2625f0bab165753515e5c",
+  "global_data_sha256": "95652b29c740c5a2e349c54303d1dac186e29865b0aa9373bf780aa22cd2c451",
+  "constructor_omissions": [
+    "C++ std::function registration is represented by owned Rust callback records",
+    "Smoothing vectors use preallocated contiguous Rust state instead of native allocations",
+    "Stack canary uses an inert owned slot"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "addresses": {
+    "filter_map": "0x104cc986c",
+    "rows": "0x104cca294",
+    "setups": "0x1096c2f60"
+  },
+  "binary": "/Users/rom/Desktop/audio/Kontakt-8-REA/Kontakt-8.arm64",
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "coefficient_fixture_sha256": "0fbc1f7880060c9e0e8b1249b58de6929a24d1a70fa3a3f91e0ee545c511be8f",
+  "evidence": {
+    "exp_table_init": "Kontakt-8-REA/pseudocode/functions/0x101c02f98.c",
+    "process_int": "Kontakt-8-REA/pseudocode/functions/0x1005c3b58.c",
+    "set_cabinet": "Kontakt-8-REA/pseudocode/functions/0x1005c35e8.c",
+    "set_sample_rate": "Kontakt-8-REA/pseudocode/functions/0x1005c2dbc.c"
+  },
+  "frames_fixture_sha256": "5184bb5163cfc69db1b7b50fa03b30648b2ca246149622f96cabcd4592278512",
+  "origin": "Independent Python reference from saved static Kontakt evidence; not a native-render capture",
+  "provisional": {
+    "delay_ka": 600.6,
+    "delay_kb": 53.8,
+    "note": "Native __common delay-smoothing poles are not file-backed; provisional constants used."
+  },
+  "row_floats": 185,
+  "row_stride": 740,
+  "table_blob_sha256": "6830a94e0cea60ad943541b2ce1be8b25657b850a532749a987d92b4724ce601",
+  "tables_sha256": "6830a94e0cea60ad943541b2ce1be8b25657b850a532749a987d92b4724ce601"
+}

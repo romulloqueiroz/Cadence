@@ -1,0 +1,35 @@
+{
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "method": "Decoded ARM64 numeric source translated into Rust expressions/basic blocks, shared integer/vector aliases and fused operations preserved. No target instructions or executable image loads in playback.",
+  "functions": 72,
+  "scope": "Complete EP numerical core with native rate, smoothing, parameter callbacks, mode changes, circuit processing and partial Reset; deterministic allocation-free restart restores the configured initial circuit.",
+  "validation": [
+    "21 original-ARM64 core cases, 10752 stereo internal frames across all model/EQ/tremolo/shape modes and live controls, maximum sample error 0.",
+    "Native initial state snapshots match within coefficient tolerance.",
+    "Dense pivoted 6x6 LU/inverse/lower+upper triangular helpers match independent original-ARM64 fixtures.",
+    "252 endpoint/rate/mode cases and live opposite endpoints remain finite; 12 rate/mode restart cases match fresh circuits exactly.",
+    "Instrumented optimized standalone: 96000 stereo internal frames at96k including live controls and hard restart, zero heap allocations, elapsed307.4ms on the verification machine.",
+    "Group/per-voice prepared-state copy and64KiBEPscratch integration verified by the2026-11-11 regression run; original numerical golden fixtures remain passing."
+  ],
+  "limitations": [
+    "Isolated numerical matches do not establish full Kontakt-host parity.",
+    "Original Suspend/Reset retains histories: independent native96k replay differs from fresh by0.14118018 peak; product transport restart explicitly restores its initial state.",
+    "Snapshot canonicalization preserves the12 typed packed speed/dirty fields rather than treating accidental ASLR-range bit patterns as pointers.",
+    "ARM64 reciprocal/rsqrt intrinsics are exact on the validated architecture; other architectures are not covered by these native goldens."
+  ],
+  "files": {
+    "src/epiano_dsp.rs": "fcc7279887925730d29c28835767511798e85cecb446b73b3201fa9b3b625b7a",
+    "src/epiano_numeric.rs": "bb2201b1ba0e0f27ea6f74d370a72e7d448249a92781067e0119ae963423375d",
+    "src/epiano_constants.bin": "2d35da912a0babf333e2ff6c9e1ba44cbc78ea3a5c72ef05c72affc12caf1b35",
+    "src/epiano_constants_canonical.bin": "6de37b8f0a56c3c1161f3a6f9a154c31e669d4727d6a5ad9778436b174b715bf",
+    "src/epiano_initial.bin": "e6b563eae9946ed9b3ef752b602bae5e49d40da7c23f4aa7aed89a974a2c00da",
+    "src/epiano-functions.json": "65edf80eafa4ef4c068bf42317f5990aeb571f4ab3e78962acd361a17d410974",
+    "tests/fixtures/epiano_translate.py": "7528702fbfbb30ebfb116a37de7f610e736bfa4046e11117e93897607bb2c034",
+    "tests/fixtures/epiano_native_reference.py": "4ec88f3cb80637b72fbe4f5a948d0288a35a16722884be4e398cd3a4b0e44b99",
+    "tests/fixtures/epiano_core_reference.py": "3f8916053581aad9686c0a4a6a79013d38144df48ee2943d1852ce0ca39d6626",
+    "tests/fixtures/epiano-core-native.bin": "95264862cb36646593586c9e835098471a5d49df16f4645b8a3ff0ac86a68b53",
+    "tests/fixtures/epiano_matrix_reference.py": "cdeda103300b94210511c4802b8a7702af693652f1e035a5d856bc2d581d71e6",
+    "tests/fixtures/epiano-matrix-native.bin": "dd57844002ac5d1e6ed9b8b030c4a8c55a342bd47df010b4811faaf4a7b0d645"
+  },
+  "decoded_instruction_count": 18901
+}

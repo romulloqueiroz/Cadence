@@ -1,0 +1,52 @@
+{
+  "method": "Extract canonical SRC numeric initialization data from its native fixture.\n\nThe source fixture records isolated original Initialize/convert runs. This\nextractor retains only the nine configuration snapshots for shipping runtime;\nno audio captures, code bytes, or executable image are embedded in the product.\n",
+  "source_fixture_sha256": "633ba181368d00090764ef36541157f0252a738b0c5e98d539a89b35e2a8a68b",
+  "snapshot_sha256": "200e0cec49fff77543c66f82346f510fef8cc5bb0d1ff20d9dd49adef88fcef3",
+  "index": [
+    {
+      "exponent": -4,
+      "offset": 0,
+      "bytes": 7808
+    },
+    {
+      "exponent": -3,
+      "offset": 7808,
+      "bytes": 6272
+    },
+    {
+      "exponent": -2,
+      "offset": 14080,
+      "bytes": 5504
+    },
+    {
+      "exponent": -1,
+      "offset": 19584,
+      "bytes": 5120
+    },
+    {
+      "exponent": 0,
+      "offset": 24704,
+      "bytes": 4096
+    },
+    {
+      "exponent": 1,
+      "offset": 28800,
+      "bytes": 5120
+    },
+    {
+      "exponent": 2,
+      "offset": 33920,
+      "bytes": 5504
+    },
+    {
+      "exponent": 3,
+      "offset": 39424,
+      "bytes": 6272
+    },
+    {
+      "exponent": 4,
+      "offset": 45696,
+      "bytes": 7808
+    }
+  ]
+}

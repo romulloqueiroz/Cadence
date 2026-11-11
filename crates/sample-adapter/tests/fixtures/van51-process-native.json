@@ -1,0 +1,68 @@
+{
+  "origin": "Isolated original ARM64 ProcessInt instruction execution",
+  "source": "Kontakt-8-REA/pseudocode/functions/0x1005d55bc.c",
+  "source_sha256": "cc479cfa0552773de148e161f43920a6a76c8e85a7dd571e10bafdf964006c60",
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "analysis_profile": "040072c9c8ab8c896677a5e18badb276196ce107557bde41bc438752d586aebd",
+  "generator_sha256": "523e39e45cd0de65354eb24b89179e3020d9131900ab33ef35fa26a38862fc3d",
+  "native_generator_sha256": "090999bdfe11b4eb53b58315a28f8638af54db2ea0e7fcbeb2a001149ada926b",
+  "generated_cpp_sha256": null,
+  "setup_sha256": "1f1df85a643d04622f33625c7f90bc3925c48196162464c126db62ac0d7f1fb6",
+  "arithmetic": "Original ARM64 instructions; native reciprocal, narrowing and fused operations",
+  "corrections": [
+    "Ghidra alias at channel+388: retain old390 before write; similarly +408 retains old410; native assembly 1005d654c..6560 confirms ordinary history shift"
+  ],
+  "fixture_cases": [
+    {
+      "name": "synthetic-0",
+      "frames": 512,
+      "mono": false,
+      "initial_sha256": "f31c3e768f7d1143bf5ae3b26911eb389c88eb73883224697f72e976f700726a",
+      "input_sha256": "f42ee763d4d325f6470c0668b7a23f806dd5dcbcd9ef108c9d9b87bb44c84f6e",
+      "output_sha256": "407745e336b931d306ae742ce01f77f5d5fcba90b346fbb02d777b95ecc25a95",
+      "final_state_sha256": "3094b683e29d29478981451f2c6ef6d413429aa468bbbc6475eac87e558c08d3"
+    },
+    {
+      "name": "synthetic-1",
+      "frames": 113,
+      "mono": false,
+      "initial_sha256": "803879338328de4360fda21bbe4db17ceef5908335455c2c23556c5fbbe114c0",
+      "input_sha256": "3e93a99ee212971e6959421cb3d9e98a5f2a8843e5c8e8fd973467fd56849a5e",
+      "output_sha256": "e95e6e6b8d434f4b15b70bc090a484e20f6915c3997890159a2296ffc925ea62",
+      "final_state_sha256": "1242059b093c48076d6b37a24fd144636657069dcabac3a495a8a032cb7e7c8e"
+    },
+    {
+      "name": "synthetic-2",
+      "frames": 137,
+      "mono": false,
+      "initial_sha256": "7e9dbd8d7302daefd2bfe16ab96c8f546c3d93079719eafa9f349919ee77e3ef",
+      "input_sha256": "f95f89668b26eca493f967b2c49ae33c459214ffa817a58a6378ece10aac226b",
+      "output_sha256": "2b07dfeaaacc4a3d5cb1379c4c54e910adaea358c972b37fdf439de6f783bd22",
+      "final_state_sha256": "f6f2535df83b67bf41a63ca233a60da291f1b6ff6663f0c72e2552454fcfd9bd"
+    },
+    {
+      "name": "synthetic-3",
+      "frames": 64,
+      "mono": true,
+      "initial_sha256": "435a52ecaed88f5bb81d353f7539cdb339c889d3b56907d849ff507017218faa",
+      "input_sha256": "f5aa3d6cb6602a085e0e6bafc21f3e40e78fc21e1e89d9aff0ee104eca089f19",
+      "output_sha256": "ddeff4b0a23adb9544069007ab8db599f28259cb450a2f21cf31761af379e3f5",
+      "final_state_sha256": "74f2c744ba4b798f4dfb801bb8963d06a18422c24684a88692627faa9c0c9568"
+    },
+    {
+      "name": "initialized-explicit-snapshot",
+      "frames": 512,
+      "mono": false,
+      "initial_sha256": "312b6f0253e9b6903b3b03a81a75715692aff22bebf9171b27cc4113cff6434d",
+      "input_sha256": "f42ee763d4d325f6470c0668b7a23f806dd5dcbcd9ef108c9d9b87bb44c84f6e",
+      "output_sha256": "f45be930f08c833ea04f3580abb80108aebb1fd5770281712c48047ceb87c4e3",
+      "final_state_sha256": "328b261975c25058e4ef84bfcebd3d8ea040041a48f0dfd2b72279f38e64495e"
+    }
+  ],
+  "fixture_schema": "VANPROC1 +u32case_count; each case u32frames,initial_state[0xa000],perframe[inputL,inputR,expectedL,expectedR]f32LE,final_state[0xa000]",
+  "schema": "input/output interleaved stereo f32 LE (1..1024 frames); state is 40960 raw bytes; table/input pointer slots rebound locally and zeroed on export",
+  "limitations": [
+    "Explicit snapshots are circuit inputs; original ProcessInt execution does not validate the full host lifecycle"
+  ],
+  "fixture_sha256": "e686e3b6197ae7289d7d0f8760d397279644199c488feebd51fc8b1b7acf9f4c"
+}

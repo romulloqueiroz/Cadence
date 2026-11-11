@@ -1,0 +1,20 @@
+{
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "functions": [
+    "0x1005d9838",
+    "0x1005de8e8",
+    "0x1005dadf0",
+    "0x1005deb88",
+    "0x1005decbc"
+  ],
+  "generator_sha256": "3e68484f9d32fcca96c38d1f7443df683582736765987a55ad9d32dae9cada33",
+  "cases": 16,
+  "frames_per_case": 384,
+  "parameter_change_frame": 128,
+  "method": "Generate HOTSOLO oracles from isolated SHA-bound ARM64 numerical routines.\nPrivate RW-to-RX image; only libc bzero/memcpy imports and explicit curve\ngetters are bound. No application, UI, plug-in entry point, or base constructor.\n",
+  "snapshot_sha256": "88c2a398129b44bac800d011ce089069f0d07d6b1b2436e8ff27d41e1a4101d4",
+  "limitations": [
+    "Isolated native numerical parity does not establish full Kontakt-host parity.",
+    "Base volume anticipation is a no-op on initially zero base state."
+  ]
+}

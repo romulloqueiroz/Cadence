@@ -1,0 +1,17 @@
+{
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "polynomial_helpers": [
+    "0x1005cf4c8",
+    "0x1005d3540",
+    "0x1005d3d2c"
+  ],
+  "rate_helper": "0x1005ce690",
+  "method": "Isolated original ARM64 helper instruction execution, private mmap RW to RX, ctypes function ABI; no app/plugin initialization. ExpTable reconstructed with rounded f32 bases and rounded-f32 differences.",
+  "polynomial_cases": 20,
+  "rate_cases": 5,
+  "control_cases": 5,
+  "controls_sha256": "ac9cc6924c44bc554b7227f5148b19a1f8723914e9fdc3b7782c5dcf392361a4",
+  "polynomial_sha256": "69fd811cc7f7cd84534297e7d4dac030063e7f8983861d2d7fac395148be60cd",
+  "rate_sha256": "77a2e91ab8b0589f7df1deeccda8ac3b63082c71584e362fe21dd3e9ad58b686",
+  "limitations": "Proves these helper coefficient outputs only; not full native audio or host behavior."
+}

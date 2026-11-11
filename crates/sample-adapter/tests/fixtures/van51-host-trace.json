@@ -1,0 +1,16 @@
+{
+  "method": "Retain bounded, read-only ProcessInt entry/exit observations from Kontakt.\n\nThe capture script/provenance stay under app/build/verification. This extractor\ncopies the initial numerical state and 14 consecutive 32-frame input/output\nslices, removing all process-specific pointers. No target code is shipped.\n",
+  "source": "/Users/rom/Desktop/audio/platform/app/build/verification/native-van51-host-trace-2026-11-09",
+  "function": "BEffectVan51::ProcessInt",
+  "installed_vst3_offset": "0x5dc6dc",
+  "frames": 448,
+  "blob_sha256": "0f95bb5243c0608f3c0793267d9911eda8e2973ef382c43dbf8218e10b45c3a3",
+  "observations": [
+    "Presence target retains its 44.1 kHz value after host preparation at 48 kHz",
+    "Host activation fades three unity currents from zero",
+    "Full native dry-input replay from captured state is bit-identical through the last non-silent host block"
+  ],
+  "limitations": [
+    "One default-control host activation; does not prescribe application lifecycle policy"
+  ]
+}

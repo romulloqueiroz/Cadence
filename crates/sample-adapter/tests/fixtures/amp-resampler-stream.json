@@ -1,0 +1,61 @@
+{
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "method": "Run original stereo SRC in minimal integer-ratio input/output batches.\n\nDownsampling gets one ratio-sized batch per output frame; upsampling gets one\ninput frame per call. This avoids the original DOWN kernel's unsupported path\nwith a zero-sized output block. Native converter only, no application lifecycle.\n",
+  "cases": [
+    {
+      "exponent": -4,
+      "input_batch_frames": 16,
+      "blocks": 64,
+      "output_frames": 64
+    },
+    {
+      "exponent": -3,
+      "input_batch_frames": 8,
+      "blocks": 128,
+      "output_frames": 128
+    },
+    {
+      "exponent": -2,
+      "input_batch_frames": 4,
+      "blocks": 256,
+      "output_frames": 256
+    },
+    {
+      "exponent": -1,
+      "input_batch_frames": 2,
+      "blocks": 512,
+      "output_frames": 512
+    },
+    {
+      "exponent": 0,
+      "input_batch_frames": 1,
+      "blocks": 1024,
+      "output_frames": 1024
+    },
+    {
+      "exponent": 1,
+      "input_batch_frames": 1,
+      "blocks": 1024,
+      "output_frames": 2048
+    },
+    {
+      "exponent": 2,
+      "input_batch_frames": 1,
+      "blocks": 1024,
+      "output_frames": 4096
+    },
+    {
+      "exponent": 3,
+      "input_batch_frames": 1,
+      "blocks": 1024,
+      "output_frames": 8192
+    },
+    {
+      "exponent": 4,
+      "input_batch_frames": 1,
+      "blocks": 1024,
+      "output_frames": 16384
+    }
+  ],
+  "sha256": "5fa78243e87d7fc9f45e3e9419296b605c2fe92ff927f5a314b7998bd83e4190"
+}

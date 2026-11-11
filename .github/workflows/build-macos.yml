@@ -1,0 +1,35 @@
+name: Build macOS
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust
+        run: rustup toolchain install stable --profile minimal && rustup default stable
+      - name: Set up patched JUCE
+        run: python3 scripts/setup-juce.py
+      - name: Build Rust workspace
+        run: cargo build --workspace --locked
+      - name: Rust tests
+        run: cargo test --workspace --locked
+      - name: Configure
+        run: cmake -S app -B app/build-release -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build app/build-release --target Cadence_Standalone Cadence_AU Cadence_VST3 CadenceScanTests -j 3
+      - name: Integration tests
+        run: CADENCE_TEST_TMPDIR="$RUNNER_TEMP" ctest --test-dir app/build-release --output-on-failure
+      - name: Package
+        run: python3 scripts/package-macos.py --build-dir app/build-release --configuration Release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Cadence-macOS
+          path: |
+            dist/*.zip
+            dist/*.sha256
+          if-no-files-found: error

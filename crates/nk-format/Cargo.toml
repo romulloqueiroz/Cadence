@@ -1,0 +1,15 @@
+[package]
+name = "nk-format"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "Reader for Native Instruments Kontakt instrument containers and their K2 XML program model"
+
+[dependencies]
+flate2 = "1"
+quick-xml = "0.42"
+
+[[bin]]
+name = "nk-inspect"
+path = "src/bin/nk-inspect.rs"

@@ -1,0 +1,15 @@
+[package]
+name = "adapter-au"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "macOS Audio Unit hosting adapter for the universal protocol"
+
+[dependencies]
+plugin-api = { path = "../plugin-api" }
+coreaudio-sys = { version = "0.2", features = ["audio_unit"] }
+
+[[bin]]
+name = "au-inspect"
+path = "src/bin/au-inspect.rs"

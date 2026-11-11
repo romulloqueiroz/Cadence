@@ -1,0 +1,9 @@
+[workspace]
+resolver = "2"
+members = ["crates/nk-format", "crates/plugin-api", "crates/host", "crates/sample-adapter", "crates/plugin-package", "crates/plugin-sdk", "crates/plugin-loader", "crates/plugin-sandbox", "crates/plugin-store", "crates/plugin-discovery", "crates/adapter-clap", "crates/adapter-au", "plugins/gain", "crates/cadence-bridge", "app/Tests/rust-fixture"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0 OR MIT"
+rust-version = "1.75"

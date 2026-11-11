@@ -1,0 +1,45 @@
+{
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "method": "Isolated original BassInvader numerical constructor/rate/DRU circuit oracle.\nPrivate SHA-bound image; RX text and RW private data. A branch bypasses C++\nstd::function registration, while its10 numeric callbacks are called explicitly.\nOnly libc numerical/memory imports are bound; no app/plugin entry point runs.\n",
+  "global_initializers": [
+    "0x1019c6568",
+    "0x1019c6754"
+  ],
+  "bss_zeroed": [
+    "0x109db5000..0x109db6000"
+  ],
+  "constructor_branch": {
+    "at": "0x1019bec94",
+    "target": "0x1019bef68",
+    "purpose": "Bypass C++ std::function registration; original constructor numeric prelude and epilogue execute"
+  },
+  "functions": [
+    "0x1019bdc84",
+    "0x1019bf044",
+    "0x1019c04a4",
+    "0x1019c0a50",
+    "0x1004ffc1c",
+    "0x1019c2228",
+    "0x1019c2420",
+    "0x1019c25a4",
+    "0x1019c2728",
+    "0x1019c2a84",
+    "0x1019c2b64",
+    "0x1019c2998",
+    "0x1019c28ac",
+    "0x1019c2ca4",
+    "0x1019c2d84"
+  ],
+  "generator_sha256": "cbf4b951d11551b3fa41044e5499a124aad92d9a0566ea062789e587c8070954",
+  "global_data_sha256": "95652b29c740c5a2e349c54303d1dac186e29865b0aa9373bf780aa22cd2c451",
+  "outputs": {
+    "bassinvader-construct-native.bin": "3300067ce1e75314e63373dc7f7bf995ab1851095ed22fb77043e685c0892f94",
+    "bassinvader-native.bin": "a87002c3801c46b0aa0230632b991f5bfa43d7e94afbd0b828cec6e85b9858fd",
+    "bassinvader-live-native.bin": "d4f1487267d777bf17f710c6ac26e5e26f1cfdbc05f8dec4ac7c0792b5b2149f"
+  },
+  "limitations": [
+    "Pure isolated core and numerical model initialization; no Kontakt/plugin host execution",
+    "Constructor callback object registration replaced with explicit equivalent numerical callback records",
+    "Wrapper host control countdown reconstructed around original native startSmooth and process calls"
+  ]
+}

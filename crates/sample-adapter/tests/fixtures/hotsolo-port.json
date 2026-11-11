@@ -1,0 +1,31 @@
+{
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "source": "Decoded ARM64 scalar/SIMD numerical data flow, translated into pure Rust expressions and explicit basic blocks. No original instructions, target mapping, dynamic compiler, or emulator is present at playback.",
+  "functions": 14,
+  "decoded_instruction_count": 7507,
+  "constant_data_pages": [
+    "0x104583000",
+    "0x104cb7000",
+    "0x104cc7000",
+    "0x104cc8000",
+    "0x104d1c000",
+    "0x104d1d000",
+    "0x1096c3000",
+    "0x1096c4000"
+  ],
+  "curve_range": "0x104d46700..0x104d4af00 (9x256xf64)",
+  "runtime": "Rust-owned 0x8000-byte state; fixed scratch, input, and call-stack buffers allocated during construction. Native 32-frame control clock.",
+  "observed_validation": "16 original-ARM64 initialization snapshots match bit-for-bit; 6144 stereo frames match bit-for-bit including all-eight-control/boost changes; final circuit state tolerance checked. Deterministic reset/stereo/mono tests pass.",
+  "limitations": [
+    "Isolated numerical equivalence does not establish full Kontakt-host lifecycle parity.",
+    "Base constructor replaced with initially zero base state, base volume anticipation reproduced, base SmoothVolumeAndOut remains owned by adapter routing.",
+    "Architecture-exact reciprocal estimate uses portable ARM intrinsics on aarch64; portable integer estimate on other hosts is not covered by this ARM64 fixture run."
+  ],
+  "files": {
+    "src/hotsolo_constants.bin": "77999f01f70921d922865e97f60a178c5db60ba1642ee339e8b3d96a2d6a6129",
+    "src/hotsolo_curves.bin": "2d16e57df53b4b8f2d189937a956917d28daad5c06d17e8d93c68b8cf88be17f",
+    "src/hotsolo_numeric.rs": "be19e549cffd04f3dc0aba96455720e629e28fc40ea080d0b97f92a856ee9abe",
+    "tests/fixtures/hotsolo_translate.py": "d6460bbd7a620b4ce681bfd853220a2c1a57a378495c2a3f5d79dcfff8b91d8b",
+    "tests/fixtures/hotsolo-native.bin": "88c2a398129b44bac800d011ce089069f0d07d6b1b2436e8ff27d41e1a4101d4"
+  }
+}

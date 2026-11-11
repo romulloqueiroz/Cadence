@@ -1,0 +1,19 @@
+[package]
+name = "sample-adapter"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "Kontakt/sample-library adapter implementing the universal plugin protocol"
+
+[dependencies]
+plugin-api = { path = "../plugin-api" }
+nk-format = { path = "../nk-format" }
+host = { path = "../host" }
+
+[dev-dependencies]
+flate2 = "1"
+
+[[bin]]
+name = "sample-host"
+path = "src/bin/sample-host.rs"

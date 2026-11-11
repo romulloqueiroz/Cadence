@@ -1,0 +1,16 @@
+{
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "cases": 2,
+  "functions": [
+    "0x1019e357c",
+    "0x1019e3324",
+    "0x1019e40b8",
+    "0x1019e72c4"
+  ],
+  "method": "Original isolated Eigen 6x6 LU, triangular-solve and inverse helper goldens.\n\nThese dense matrices cover the shifted-NEG byte-stride bug that a diagonal\nmatrix misses. The fixture records native LU state, inverse, lower solve and\nupper solve for each matrix; no application or plug-in entry point runs.\n",
+  "sha256": "dd57844002ac5d1e6ed9b8b030c4a8c55a342bd47df010b4811faaf4a7b0d645",
+  "generator_sha256": "cdeda103300b94210511c4802b8a7702af693652f1e035a5d856bc2d581d71e6",
+  "limitations": [
+    "Isolated numerical helpers only; not full Kontakt-host lifecycle parity."
+  ]
+}

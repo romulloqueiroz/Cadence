@@ -1,0 +1,67 @@
+{
+  "origin": "Independent scalar binary32 replay of saved Ghidra ProcessInt, not native execution",
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "fixture_sha256": "bfaf5b265da8bb30e4ba0f13b65b915cdcbbb4bec4f93dcbfd6b407ca6efd59e",
+  "schema": "8-byte JMPPROC1; u32 case_count,c_count=236,m_count=24,s_count=72; each case f32 host_rate,u32 frames; f32 c[236] at +4630..49dc,m[24],initial_state[72] at +1d0..2ec; frames pairs(input,expected_output); final_state[72]. Little endian.",
+  "sources": {
+    "0x1005cc6ac.c": "a2f82dc52cd7a1fbf3abe4e35b2bf777313476c681ffa4a61038cf8ba283c6be",
+    "0x1005ca0a0.c": "27bfdcc4ec3b5dcbc13bd13f62b5b765371e5fc65d6866c536bcad9b94ab3674",
+    "0x1005cbde0.c": "3c7bc9c4dc1c952bf7d6e0283d6f4c7789d6b8e12698384303ea4ec5d4c10b78",
+    "0x1005c9e78.c": "daa78d4f6097006dcc75f9f8de51a3697ce77bf4107d7dffe50f249f2849ffa4",
+    "0x1005caf30.c": "9e79a5aa095aad791dad5807a54db6101087b034a8faba47309ea432a0a9be19",
+    "0x1005cbf1c.c": "a270a1280478b2081c4bd32d8295f5ba5b2131c51a35a9a08ddc005b6e3bf173",
+    "0x1005cd29c.c": "ba8ea36cb6031b9606dd9c4d4d2e242a79b05f9720ec189088f38ac1e1f4f25b",
+    "0x1005cac6c.c": "59fa5e24c56d408893c2bd0120ce1dc14964825fa153911820a33301c5171563"
+  },
+  "cases": [
+    {
+      "rate": 44100.0,
+      "drive_target": 0.001,
+      "eq": [
+        0.3,
+        0.4,
+        0.5,
+        0.5
+      ],
+      "channel": false,
+      "frames": 2048,
+      "peak": 0.5281014442443848,
+      "output_rms": 0.4999513494784836
+    },
+    {
+      "rate": 48000.0,
+      "drive_target": 0.1515,
+      "eq": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "channel": false,
+      "frames": 2048,
+      "peak": 1.0356438159942627,
+      "output_rms": 0.4796081986702922
+    },
+    {
+      "rate": 96000.0,
+      "drive_target": 0.96,
+      "eq": [
+        0.8,
+        0.2,
+        0.9,
+        0.1
+      ],
+      "channel": true,
+      "frames": 2048,
+      "peak": 0.5115166902542114,
+      "output_rms": 0.4735935234393442
+    }
+  ],
+  "limitations": [
+    "No Kontakt execution or native audio parity",
+    "Explicit static current/coefficient snapshots; setter and automation scheduling not covered",
+    "Scalar reciprocal division substitutes NEON estimates/refinements",
+    "No instruction FMA contraction",
+    "Virtual base-effect initialization/gain interactions not established"
+  ]
+}

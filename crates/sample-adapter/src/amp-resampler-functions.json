@@ -1,0 +1,50 @@
+{
+  "0x101ea9770": {
+    "rust": "convert",
+    "symbols": [
+      "__ZN2NI2AB19SampleRateConverter7convertEPKPKfjPKPfjj"
+    ]
+  },
+  "0x101ea9910": {
+    "rust": "reset",
+    "symbols": [
+      "__ZN2NI2AB19SampleRateConverter16resetAllChannelsEv"
+    ]
+  },
+  "0x101ea9cf0": {
+    "rust": "generic",
+    "symbols": [
+      "__ZN2NI2AB19SampleRateConverter15process_genericEv"
+    ]
+  },
+  "0x101eaa130": {
+    "rust": "up",
+    "symbols": [
+      "__ZN2NI2AB19SampleRateConverter16process_intratUPEv"
+    ]
+  },
+  "0x101eaa440": {
+    "rust": "down",
+    "symbols": [
+      "__ZN2NI2AB19SampleRateConverter18process_intratDOWNEv"
+    ]
+  },
+  "0x101eaa78c": {
+    "rust": "double",
+    "symbols": [
+      "__ZN2NI2AB19SampleRateConverter20process_intratDOUBLEEv"
+    ]
+  },
+  "0x101eaaa40": {
+    "rust": "half",
+    "symbols": [
+      "__ZN2NI2AB19SampleRateConverter18process_intratHALFEv"
+    ]
+  },
+  "0x101ea92d0": {
+    "rust": "update_status",
+    "symbols": [
+      "__ZN2NI2AB19SampleRateConverter12updateStatusEv"
+    ]
+  }
+}

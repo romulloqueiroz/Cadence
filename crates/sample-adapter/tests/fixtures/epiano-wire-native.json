@@ -1,0 +1,11 @@
+{
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "function": "0x1005f1b50",
+  "tempo": 120,
+  "cases": 20,
+  "sha256": "98913df3023f753e25c79d444541df164347d6f1cca04b7a30461d41f38c271c",
+  "method": "Observe original BEffectEPPreamps::SetEffectParameters parameter dispatch.",
+  "limitations": [
+    "Parameter dispatch at120BPM, with explicit payload defaults and numerical callback; not native instrument loading"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "generator_sha256": "4eb747a3aafd3cb79f900ea8945f52dfa49939175d8d31a3b4078e4e80b92ade",
+  "method": "Compose independent original NI SRC functions and BassInvader neural core.\nNo app or plugin host entry point runs. Covers wrapper signal path, not a full\nKontakt-host render; frame API downsampling queue latency is recorded separately.\n",
+  "core_generator": "bassinvader_native_reference.py",
+  "src_generator": "epiano_native_reference.NativeImage",
+  "functions": [
+    "0x1019bf044",
+    "0x101ea7aa0",
+    "0x101ea9770"
+  ],
+  "src_block_frames": 32,
+  "outputs": {
+    "bassinvader-wrapper-native.bin": "0ffb2151a2497c182818a74cb6ca6a6bed7205b05b31fba7f4b186a22ce9ed6c",
+    "bassinvader-mode-native.bin": "b612fea857b621fefa56601d63f9fac5d6f7e8084ab924f3e7f5144cc63cdc15"
+  },
+  "inverse_queue_delay": "The sample callback requires q-1 frames for ratio1/q;192k configuration ratio0.5 adds1 frame. Native compositions are32-frame batches; tests compare with this explicit queue latency.",
+  "limitations": [
+    "Isolated original neural core plus original NI sample-rate-conversion functions; no full Kontakt host capture",
+    "Mode routing is explicit using original function calls and independent converter histories; host silence optimization not executed"
+  ]
+}

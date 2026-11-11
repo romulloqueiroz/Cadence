@@ -1,0 +1,30 @@
+{
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "cases": 28,
+  "fixture_sha256": "1d853ebba412f6fcff724432a85561673af5573a10b66980c6c7aefd97fd6069",
+  "limitations": [
+    "No Kontakt execution or native audio capture",
+    "NEON reciprocal estimate/refinement replaced by rounded f32 division",
+    "No FMA contraction; native instruction rounding can differ",
+    "Only writes in SetSampleRate are covered; EQ targets, table metadata/pointers and untouched gaps are omitted",
+    "SetSampleRate consumes the pre-existing drive target before updating it at function exit; fixtures supply that input explicitly"
+  ],
+  "origin": "Independent Python f32 replay of saved Ghidra SetSampleRate; static coefficient reference",
+  "source_function": "Kontakt-8-REA/pseudocode/functions/0x1005caf30.c",
+  "source_sha256": "9e79a5aa095aad791dad5807a54db6101087b034a8faba47309ea432a0a9be19",
+  "values": 4396,
+  "vector_address": "0x104cc8330",
+  "vector_bits": [
+    "0x41c00000",
+    "0x41c00000",
+    "0x0",
+    "0x0"
+  ],
+  "vector_file_offset": "0x4cc8330",
+  "vector_values": [
+    24.0,
+    24.0,
+    0.0,
+    0.0
+  ]
+}

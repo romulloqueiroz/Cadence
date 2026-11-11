@@ -1,0 +1,17 @@
+[package]
+name = "plugin-discovery"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "Signed publisher feeds, release discovery and a local index"
+
+[dependencies]
+plugin-api = { path = "../plugin-api" }
+plugin-package = { path = "../plugin-package" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+ed25519-dalek = "2"
+hex = "0.4"
+ureq = "2"
+url = "2"

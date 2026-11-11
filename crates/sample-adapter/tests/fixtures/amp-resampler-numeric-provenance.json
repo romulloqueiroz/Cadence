@@ -1,0 +1,20 @@
+{
+  "binary_sha256": "42a3216b527e8eaaa2b53122acb9f11cdc1db5fbe9b7571777f362b5cc8d4ec3",
+  "method": "Decoded ARM64 numeric source translated into Rust expressions/basic blocks, shared integer/vector aliases and fused operations preserved. No target instructions or executable image loads in playback.",
+  "functions": 8,
+  "scope": "Numerical source only. Runtime memory maps, initialized state/kernel snapshots and native golden validation are owned by the adapter integration.",
+  "validation": [
+    "Standalone Rust compilation passed.",
+    "Runtime owner verified native32-frame block and minimal streaming fixtures across all9 ratios, including1/16..16 and both channels."
+  ],
+  "limitations": [
+    "Isolated numerical matches do not establish full Kontakt-host parity.",
+    "Runtime memory/configuration ownership and native fixture generation are documented separately by amp_resampler.rs."
+  ],
+  "files": {
+    "src/amp_resampler_numeric.rs": "54e257056d13e4e166e7483fde09d89e73b52cdb9c131b264f660587516339c9",
+    "src/amp_resampler_constants.bin": "c9ae63bceffc7d018d01aae403e4925efad8f1653d5d944d4fe1e0154c7e0931",
+    "tests/fixtures/amp_resampler_translate.py": "de4042da8828096745a4458c6de9389883a8eef4230a425d4119627486e71ae2",
+    "src/amp-resampler-functions.json": "8cd5da808ee1710c4d2464b3ef3b5c25c31efa7585df0a3330c7d65c643fd65c"
+  }
+}
