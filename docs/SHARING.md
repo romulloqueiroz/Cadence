@@ -31,6 +31,14 @@ The archive architecture comes from the actual executable. Build on each target
 architecture with the corresponding Rust target installed; universal merging is
 not implemented. Do not describe Debug packages as release builds.
 
+The [v1 release checklist](RELEASE-CHECKLIST.md) separates a development beta
+from a public release. `python3 scripts/release-audit.py` records dependency
+declarations and materials requiring review; `--public` fails while the existing
+licensing prerequisites are unresolved. `python3 scripts/sign-macos.py --check`
+reports installed Developer ID identities without signing or uploading anything.
+The signing script stages copies, supports an existing notarytool Keychain
+profile and records Apple's actual result in an adjacent JSON report.
+
 ## Before public distribution
 
 The repository currently contains recovered Kontakt numeric translations,

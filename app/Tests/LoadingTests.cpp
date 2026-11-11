@@ -28,6 +28,113 @@ juce::PluginDescription describe (const juce::String& source, const juce::String
 }
 }
 
+
+namespace
+{
+void legacyRackRecall (const juce::File& directory)
+{
+    const auto fixture = juce::File (__FILE__).getSiblingFile ("fixtures/legacy-cadence-chain.xml");
+    auto xml = juce::parseXML (fixture);
+    check (xml != nullptr && xml->hasTagName ("CADENCE"), "Read independently retained legacy rack state");
+    juce::MemoryBlock state; juce::AudioProcessor::copyXmlToBinary (*xml, state);
+    for (bool prepareFirst : { false, true })
+    {
+        CadenceAudioProcessor rack ({ cadence::RustPluginProcessor::workerFile(), directory });
+        rack.setNonRealtime (true);
+        if (prepareFirst) rack.prepareToPlay (48000, 256);
+        rack.setStateInformation (state.getData(), static_cast<int> (state.getSize()));
+        check (until ([&] { return rack.getNumSlots() == 2 && ! rack.isLoading(); }), "Legacy rack restores both slots");
+        if (! prepareFirst) rack.prepareToPlay (48000, 256);
+        for (int slot = 0; slot < 2; ++slot)
+        {
+            auto* plugin = dynamic_cast<cadence::RustPluginProcessor*> (rack.getSlotProcessor (slot));
+            check (plugin != nullptr && ! plugin->hasFailed(), "Legacy state produces healthy loaded workers");
+            std::cout << "LEGACY slot " << slot << " control " << plugin->getParameters()[0]->getValue() << '\n';
+        }
+        juce::AudioBuffer<float> buffer (2, 256); juce::MidiBuffer midi;
+        float peak = 0;
+        for (int block = 0; block < 300; ++block)
+        {
+            buffer.clear(); midi.clear();
+            if (block == 0) midi.addEvent (juce::MidiMessage::noteOn (1, 60, static_cast<juce::uint8> (100)), 0);
+            if (block == 200) midi.addEvent (juce::MidiMessage::noteOff (1, 60), 0);
+            rack.processBlock (buffer, midi); peak = juce::jmax (peak, buffer.getMagnitude (0, 256));
+        }
+        std::cout << "LEGACY prepareFirst=" << prepareFirst << " peak=" << peak << '\n';
+        check (peak > 0.01f, "Legacy saved Sine/Gain rack produces audible output");
+    }
+}
+
+void kontaktRecovery (const juce::File& directory)
+{
+    const auto instrument = directory.getChildFile ("Recovery instrument.nki");
+    const auto root = directory.getChildFile ("Moved library");
+    const auto sample = root.getChildFile ("Samples/tone.wav");
+    check (sample.getParentDirectory().createDirectory().wasOk(), "Create relocated sample folder");
+    juce::WavAudioFormat wav;
+    auto stream = sample.createOutputStream();
+    std::unique_ptr<juce::AudioFormatWriter> writer (wav.createWriterFor (stream.release(), 48000, 2, 16, {}, 0));
+    check (writer != nullptr, "Create recovery sample");
+    juce::AudioBuffer<float> tone (2, 16384);
+    for (int i = 0; i < tone.getNumSamples(); ++i)
+        for (int ch = 0; ch < 2; ++ch) tone.setSample (ch, i, 0.25f * std::sin (static_cast<float> (i) * 0.1f));
+    check (writer->writeFromAudioSampleBuffer (tone, 0, tone.getNumSamples()), "Write recovery sample");
+    writer.reset();
+    const juce::String xml = R"(<K2_Container><Programs><K2_Program name="Recovery"><Groups><K2_Group index="0" name="Normal"/></Groups><Zones><K2_Zone groupIdx="0"><Parameters><V name="rootKey" value="60"/></Parameters><Sample><V name="file" value="/former/library/Samples/tone.wav"/></Sample></K2_Zone></Zones></K2_Program></Programs></K2_Container>)";
+    juce::MemoryOutputStream compressed;
+    { juce::GZIPCompressorOutputStream zlib (compressed, 6, 15); zlib.writeText (xml, false, false, nullptr); zlib.flush(); }
+    juce::MemoryBlock file (0xaa, true);
+    const auto magic = juce::ByteOrder::swapIfBigEndian (static_cast<uint32_t> (0x7fa89012));
+    std::memcpy (file.getData(), &magic, 4);
+    file.append (compressed.getData(), compressed.getDataSize());
+    check (instrument.replaceWithData (file.getData(), file.getSize()), "Write independent XML instrument");
+    CadenceAudioProcessor rack ({ cadence::RustPluginProcessor::workerFile(), directory });
+    rack.setNonRealtime (true); rack.prepareToPlay (48000, 64);
+    rack.loadPluginAsync (cadence::RustPluginProcessor::kontaktDescription (instrument));
+    check (cadenceWaitForLoading (rack) && rack.getSlotProcessor (0) == nullptr, "Missing sample leaves a recoverable failed slot");
+    check (rack.getSlotLoadStatus (0).contains ("Locate samples"), "Missing sample gives a recovery action");
+    const auto uuid = rack.getSlotUuid (0);
+    rack.setSlotBypassed (0, true);
+    check (rack.relocateKontaktSlot (uuid, {}, root) == 0 && cadenceWaitForLoading (rack), "User-selected sample root retries the failed load");
+    auto* loaded = dynamic_cast<cadence::RustPluginProcessor*> (rack.getSlotProcessor (0));
+    check (loaded != nullptr && ! loaded->hasFailed(), "Relocated instrument worker is healthy");
+    check (rack.getSlotUuid (0) == uuid && rack.isSlotBypassed (0), "Recovery preserves slot identity and bypass");
+    check (loaded->compatibilityNotices().contains ("Kontakt playback subset"), "Compatibility notice crosses worker metadata");
+    rack.loadPluginAsync (cadence::RustPluginProcessor::kontaktDescription (instrument));
+    check (cadenceWaitForLoading (rack) && rack.getSlotProcessor (1) != nullptr, "Opening a known instrument reuses its saved sample locations");
+    rack.removeSlot (1);
+    {
+        std::unique_ptr<juce::AudioProcessorEditor> panel (loaded->createEditor());
+        bool visible = false;
+        for (auto* child : panel->getChildren())
+            if (auto* notice = dynamic_cast<juce::TextEditor*> (child))
+                visible |= notice->getName() == "Instrument compatibility" && notice->isVisible() && notice->getText().contains ("scripts");
+        check (visible, "Inspector exposes a readable compatibility notice");
+        const auto image = panel->createComponentSnapshot (panel->getLocalBounds());
+        if (auto output = cadenceTestTempDirectory().getChildFile ("cadence-kontakt-compatibility.png").createOutputStream())
+            juce::PNGImageFormat().writeImageToStream (image, *output);
+    }
+    loaded->getParameters()[0]->setValueNotifyingHost (0.73f);
+    juce::AudioBuffer<float> output (2, 64); juce::MidiBuffer notes;
+    notes.addEvent (juce::MidiMessage::noteOn (1, 60, static_cast<juce::uint8> (100)), 0);
+    float peak = 0;
+    for (int i = 0; i < 8; ++i) { loaded->processBlock (output, notes); notes.clear(); peak = juce::jmax (peak, output.getMagnitude (0, 64)); }
+    check (peak > 0.0001f, "Recovered samples produce audible output");
+    juce::MemoryBlock saved; rack.getStateInformation (saved);
+    const auto moved = directory.getChildFile ("Renamed instrument.nki");
+    check (instrument.moveFileTo (moved), "Move instrument after saving project");
+    CadenceAudioProcessor restored ({ cadence::RustPluginProcessor::workerFile(), directory });
+    restored.setNonRealtime (true); restored.prepareToPlay (48000, 64);
+    restored.setStateInformation (saved.getData(), static_cast<int> (saved.getSize()));
+    check (until ([&] { return restored.getNumSlots() == 1 && ! restored.isLoading(); }) && restored.getSlotProcessor (0) == nullptr, "Moved instrument retains failed saved slot");
+    check (restored.relocateKontaktSlot (uuid, moved, {}) == 0 && cadenceWaitForLoading (restored), "Locate instrument retries with saved sample roots");
+    auto* recalled = dynamic_cast<cadence::RustPluginProcessor*> (restored.getSlotProcessor (0));
+    check (recalled != nullptr && ! recalled->hasFailed(), "Moved instrument recalls successfully");
+    check (std::abs (recalled->getParameters()[0]->getValue() - 0.73f) < 0.0001f && restored.isSlotBypassed (0), "Recovery restores saved parameter state and bypass");
+    std::cout << "PASS Kontakt recovery: missing samples, scoped search, instrument move, notices, audible playback and saved-state recall\n";
+}
+}
+
 void runLoadingTests()
 {
     const auto directory = cadenceTestTempDirectory().getNonexistentChildFile ("Cadence async loading", "", false);
@@ -173,5 +280,7 @@ void runLoadingTests()
     }
     juce::MessageManager::getInstance()->runDispatchLoopUntil (100);
     check (native.getNumSlots() == 0, "Cancelled native callback cannot restore a removed slot");
+    legacyRackRecall (directory);
+    kontaktRecovery (directory);
     std::cout << "PASS asynchronous loading: responsive UI, live audio, cancellation/reaping, configuration changes, pending-state recall, stale results, failure and destruction\n";
 }

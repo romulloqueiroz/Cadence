@@ -26,10 +26,13 @@ jobs:
         run: CADENCE_TEST_TMPDIR="$RUNNER_TEMP" ctest --test-dir app/build-release --output-on-failure
       - name: Package
         run: python3 scripts/package-macos.py --build-dir app/build-release --configuration Release
+      - name: Record distribution prerequisites
+        run: python3 scripts/release-audit.py
       - uses: actions/upload-artifact@v4
         with:
           name: Cadence-macOS
           path: |
             dist/*.zip
             dist/*.sha256
+            dist/*audit.json
           if-no-files-found: error

@@ -1,0 +1,11 @@
+{
+  "status": "pending",
+  "scope": "Cadence source and distributed binaries",
+  "source_license_declared": "Apache-2.0 OR MIT",
+  "source_license_texts": "Not yet supplied; do not infer a blanket grant over recovered material.",
+  "recovered_materials": "Review numeric translations, extracted DSP tables, native reference data and the Kontakt template listed by scripts/release-audit.py.",
+  "juce": "Review the pinned dependency's LICENSE.md and the local patch for the intended distribution.",
+  "evidence": [],
+  "reviewed_by": null,
+  "reviewed_at": null
+}

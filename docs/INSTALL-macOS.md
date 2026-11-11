@@ -24,6 +24,9 @@ disabled globally.
 Third-party plugins and sample libraries are not included. Install your own
 content separately. Saved projects referring to local files require those files
 on the receiving machine. This is an early build; test with a copy of a project.
+Kontakt support is a [documented subset](SUPPORTED-CONTENT.md). For a failed
+Kontakt rack slot, select **Locate...** to choose missing samples or a moved
+instrument, then save the project. Original instrument files are not modified.
 
 To uninstall, quit your DAW and remove the installed Cadence bundles. Settings
 are stored separately in `~/Library/Application Support/Cadence/`.

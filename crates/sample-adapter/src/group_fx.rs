@@ -167,6 +167,8 @@ pub(crate) fn compile(group: &model::Group) -> Result<Vec<GroupFxStage>, LoadErr
                     slot: index,
                     out_level,
                 });
+            } else {
+                return Err(LoadError::Failed(format!("Unsupported group effect type {} in {:?}, slot {}. This effect cannot be played by Cadence.", child.ser_type, group.name, index + 1)));
             }
         }
     }

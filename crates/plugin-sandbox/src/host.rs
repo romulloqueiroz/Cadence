@@ -992,6 +992,9 @@ fn events_to_wires<'a>(
 }
 
 impl Plugin for SandboxPlugin {
+    fn load_notices(&self) -> Vec<String> {
+        self.metadata.notices.clone()
+    }
     fn descriptor(&self) -> Descriptor {
         self.descriptor
     }

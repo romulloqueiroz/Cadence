@@ -68,6 +68,9 @@ def main():
             run('/usr/bin/codesign', '--verify', '--deep', '--strict', str(destination))
         shutil.copy2(ROOT / 'docs/INSTALL-macOS.md', stage / 'INSTALL.md')
         shutil.copy2(ROOT / 'docs/SHARING.md', stage / 'SHARING.md')
+        shutil.copy2(ROOT / 'docs/SUPPORTED-CONTENT.md', stage / 'SUPPORTED-CONTENT.md')
+        shutil.copy2(ROOT / 'docs/RELEASE-CHECKLIST.md', stage / 'RELEASE-CHECKLIST.md')
+        shutil.copy2(ROOT / 'docs/REDISTRIBUTION-REVIEW.json', stage / 'REDISTRIBUTION-REVIEW.json')
         shutil.copy2(ROOT / 'vendor/JUCE/LICENSE.md', stage / 'JUCE-LICENSE.md')
         (stage / 'BUILD.txt').write_text(f'Cadence {args.version}\nArchitecture: {arch}\nConfiguration: {args.configuration}\nSigning: ad-hoc; not notarized\n')
         staged_zip = Path(temporary) / 'archive.zip'

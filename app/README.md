@@ -24,14 +24,22 @@ the Inspector. The standalone currently needs a MIDI input device; an onscreen
 keyboard and transport controls are not implemented.
 
 **Open...** selects a `.nki`/`.nkm`, `.clap`, native protocol `.dylib`, or signed
-`manifest.json`. It probes that source in the scanner and adds a successful
-result to the Library; select it and press **Add**. Kontakt prepares resident sample attacks in a background loading worker and
+`manifest.json`. Kontakt files load directly into a recoverable rack slot and
+are added to the Library. Other sources are probed in the scanner; select a
+successful Library result and press **Add**. Kontakt prepares resident sample attacks in a background loading worker and
 streams later pages during playback. **Loading...**
 appears in its rack slot; **Cancel loading** cancels pending loads while the current
 rack keeps playing. Closing the editor leaves loading running. Wait for the new
 slot to finish loading before playing it or starting a bounce.
 Missing/unsupported samples report an
 error instead of presenting an empty playable instrument.
+
+Select a Kontakt slot and use **Locate...** in the Inspector header to choose
+sample folders or a moved instrument. Recovery retains the slot and saved state;
+chosen paths persist in the Library and project. Compatibility notices remain
+visible in the Inspector, and unsupported active binary effects/multi-program
+playback fail explicitly. See [v1 supported content](../docs/SUPPORTED-CONTENT.md)
+and the [release checklist](../docs/RELEASE-CHECKLIST.md).
 
 **Scan** discovers system/user AU, VST3 and CLAP bundles, the bundled protocol
 sources, and installed manifests under `PLATFORM_HOME/plugins` or

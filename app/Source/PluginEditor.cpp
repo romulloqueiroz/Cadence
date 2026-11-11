@@ -1,4 +1,5 @@
 #include "PluginEditor.h"
+#include "RustPluginProcessor.h"
 
 namespace
 {
@@ -184,6 +185,8 @@ CadenceAudioProcessorEditor::CadenceAudioProcessorEditor (CadenceAudioProcessor&
 
     scanButton.onClick = [this] { scan(); };
     openButton.onClick = [this] { openSource(); };
+    locateButton.onClick = [this] { locateKontakt(); };
+    locateButton.setTooltip ("Locate a moved Kontakt instrument or its missing samples; saved rack settings are retained");
     cancelLoadButton.onClick = [this] { audioProcessor.cancelLoading(); refreshChain (-1); };
     cancelLoadButton.setTooltip ("Cancel pending loads and keep the current rack playing");
     openButton.setTooltip ("Open a Kontakt instrument, CLAP plugin, native protocol library, or signed package manifest");
@@ -231,7 +234,7 @@ CadenceAudioProcessorEditor::CadenceAudioProcessorEditor (CadenceAudioProcessor&
     };
 
     for (auto* button : { &scanButton, &openButton, &cancelLoadButton, &skipButton, &skippedButton, &addButton, &bypassButton,
-                          &removeButton, &upButton, &downButton })
+                          &removeButton, &upButton, &downButton, &locateButton })
         addAndMakeVisible (button);
 
     addAndMakeVisible (automationLabel);
@@ -396,7 +399,9 @@ void CadenceAudioProcessorEditor::resized()
     downButton.setBounds (chainButtons.removeFromLeft (58));
 
     auto rightInner = right.reduced (14, 12);
-    inspectorLabel.setBounds (rightInner.removeFromTop (22));
+    auto inspectorHeader = rightInner.removeFromTop (22);
+    locateButton.setBounds (inspectorHeader.removeFromRight (82));
+    inspectorLabel.setBounds (inspectorHeader);
     inspectorViewport.setBounds (rightInner.reduced (0, 8));
 
     libraryHint.setBounds (browserList.getBounds());
@@ -425,6 +430,9 @@ void CadenceAudioProcessorEditor::timerCallback()
 
     const auto scanning = audioProcessor.isScanning();
     const auto loading = audioProcessor.isLoading();
+    const auto kontakt = selectedChain() >= 0 && audioProcessor.getSlotDescription (selectedChain()).pluginFormatName == "Kontakt";
+    locateButton.setVisible (kontakt);
+    locateButton.setEnabled (kontakt && ! loading);
     openButton.setEnabled (! scanning && ! loading);
     addButton.setEnabled (! loading);
     scanButton.setEnabled (! loading || scanning);
@@ -636,8 +644,46 @@ void CadenceAudioProcessorEditor::openSource()
             if (safe == nullptr) return;
             const auto file = chooser.getResult();
             if (! file.exists()) return;
-            const auto format = file.hasFileExtension ("nki;nkm") ? "Kontakt" : file.hasFileExtension ("clap") ? "CLAP" : "Protocol";
+            const juce::String format = file.hasFileExtension ("nki;nkm") ? "Kontakt" : file.hasFileExtension ("clap") ? "CLAP" : "Protocol";
+            if (format == "Kontakt")
+            {
+                safe->audioProcessor.loadPluginAsync (cadence::RustPluginProcessor::kontaktDescription (file));
+                safe->refreshChain (safe->audioProcessor.getNumSlots() - 1);
+                return;
+            }
             safe->audioProcessor.retrySkippedPlugin ({ format, file.getFullPathName() });
+        });
+}
+
+void CadenceAudioProcessorEditor::locateKontakt()
+{
+    const auto index = selectedChain();
+    if (index < 0 || audioProcessor.getSlotDescription (index).pluginFormatName != "Kontakt") return;
+    const auto uuid = audioProcessor.getSlotUuid (index);
+    juce::PopupMenu menu;
+    menu.addItem (1, "Locate samples...");
+    menu.addItem (2, "Locate instrument...");
+    menu.addItem (3, "Clear sample locations");
+    menu.showMenuAsync (juce::PopupMenu::Options().withTargetComponent (&locateButton),
+        [safe = juce::Component::SafePointer<CadenceAudioProcessorEditor> (this), uuid] (int choice)
+        {
+            if (safe == nullptr) return;
+            if (choice == 3)
+            {
+                const auto row = safe->audioProcessor.relocateKontaktSlot (uuid, {}, {});
+                if (row >= 0) safe->refreshChain (row);
+                return;
+            }
+            if (choice != 1 && choice != 2) return;
+            safe->sourceChooser = std::make_unique<juce::FileChooser> (choice == 1 ? "Choose the library's sample folder" : "Locate the instrument", juce::File(), choice == 1 ? "*" : "*.nki;*.nkm");
+            safe->sourceChooser->launchAsync (juce::FileBrowserComponent::openMode | (choice == 1 ? juce::FileBrowserComponent::canSelectDirectories : juce::FileBrowserComponent::canSelectFiles),
+                [safe, uuid, choice] (const juce::FileChooser& chooser)
+                {
+                    if (safe == nullptr || chooser.getResult() == juce::File()) return;
+                    safe->clearSlotEditor();
+                    const auto row = safe->audioProcessor.relocateKontaktSlot (uuid, choice == 2 ? chooser.getResult() : juce::File(), choice == 1 ? chooser.getResult() : juce::File());
+                    if (row >= 0) safe->refreshChain (row);
+                });
         });
 }
 

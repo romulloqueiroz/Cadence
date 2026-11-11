@@ -37,6 +37,13 @@ public:
         showStreaming = bridgeProcessor.streamingStats (streamingSnapshot);
         streaming.setVisible (showStreaming);
         addAndMakeVisible (genericContainer);
+        notices.setName ("Instrument compatibility");
+        notices.setMultiLine (true);
+        notices.setReadOnly (true);
+        notices.setScrollbarsShown (true);
+        notices.setText (bridgeProcessor.compatibilityNotices(), false);
+        notices.setVisible (bridgeProcessor.compatibilityNotices().isNotEmpty());
+        addChildComponent (notices);
         genericContainer.addAndMakeVisible (generic);
         genericWidth = generic.getWidth();
         if (formatName == "CLAP")
@@ -51,7 +58,7 @@ public:
             };
             addAndMakeVisible (nativeEditorButton);
         }
-        setSize (400, juce::jmax (180, generic.getHeight() + 72) + (showStreaming ? 144 : 0) + (formatName == "CLAP" ? 28 : 0));
+        setSize (400, juce::jmax (180, generic.getHeight() + 72) + noticeHeight() + (showStreaming ? 144 : 0) + (formatName == "CLAP" ? 28 : 0));
         timerCallback(); startTimerHz (5);
     }
     ~RustEditor() override { setLookAndFeel (nullptr); }
@@ -61,6 +68,7 @@ public:
         if (formatName == "CLAP")
             nativeEditorButton.setBounds (area.removeFromTop (28));
         message.setBounds (area.removeFromTop (48));
+        notices.setBounds (area.removeFromTop (noticeHeight()).reduced (0, 4));
         streaming.setBounds (showStreaming ? area.removeFromTop (144) : juce::Rectangle<int>());
         const auto scale = juce::jmin (1.0f, static_cast<float> (area.getWidth()) / static_cast<float> (genericWidth));
         generic.setBounds (0, 0, genericWidth, static_cast<int> (std::ceil (static_cast<float> (area.getHeight()) / scale)));
@@ -69,6 +77,7 @@ public:
     }
     void paint (juce::Graphics& g) override { g.fillAll (juce::Colour (0xff15171b)); }
 private:
+    int noticeHeight() const { return bridgeProcessor.compatibilityNotices().isNotEmpty() ? 120 : 0; }
     void timerCallback() override
     {
         bridgeProcessor.refreshTimedParameterListeners();
@@ -86,7 +95,7 @@ private:
             {
                 showStreaming = true;
                 streaming.setVisible (true);
-                setSize (400, juce::jmax (180, generic.getHeight() + 72) + 144);
+                setSize (400, juce::jmax (180, generic.getHeight() + 72) + noticeHeight() + 144);
             }
         }
         const auto& stats = streamingSnapshot;
@@ -118,6 +127,7 @@ private:
     juce::Component genericContainer;
     juce::GenericAudioProcessorEditor generic;
     juce::Label message, streaming;
+    juce::TextEditor notices;
     juce::TextButton nativeEditorButton;
     CadenceStreamingStats streamingSnapshot {};
     bool showStreaming = false;
@@ -159,6 +169,58 @@ struct RustPluginProcessor::Parameter final : juce::AudioParameterFloat
 bool RustPluginProcessor::supports (const juce::String& format)
 {
     return format == "Protocol" || format == "Kontakt" || format == "CLAP";
+}
+
+juce::PluginDescription RustPluginProcessor::kontaktDescription (const juce::File& file)
+{
+    juce::PluginDescription d;
+    d.name = d.descriptiveName = file.getFileNameWithoutExtension();
+    d.pluginFormatName = "Kontakt";
+    d.manufacturerName = "Cadence";
+    d.version = "0.1.0";
+    d.isInstrument = true;
+    d.numOutputChannels = 2;
+    d.uniqueId = d.deprecatedUid = file.getFullPathName().hashCode();
+    d.fileOrIdentifier = identifier (file.getFullPathName(), {});
+    return d;
+}
+
+juce::File RustPluginProcessor::kontaktFile (const juce::PluginDescription& d)
+{
+    const auto stored = juce::JSON::parse (d.fileOrIdentifier);
+    const auto source = stored.isObject() ? stored["source"].toString() : d.fileOrIdentifier;
+    return juce::File (source.startsWith ("cadence-kontakt:") ? juce::JSON::parse (source.substring (16))["path"].toString() : source);
+}
+
+juce::PluginDescription RustPluginProcessor::relocateKontakt (juce::PluginDescription d,
+                                                              const juce::File& instrument,
+                                                              const juce::File& sampleRoot)
+{
+    const auto stored = juce::JSON::parse (d.fileOrIdentifier);
+    const auto source = stored.isObject() ? stored["source"].toString() : d.fileOrIdentifier;
+    auto spec = source.startsWith ("cadence-kontakt:") ? juce::JSON::parse (source.substring (16)) : juce::var();
+    if (! spec.isObject())
+    {
+        spec = juce::var (new juce::DynamicObject());
+        spec.getDynamicObject()->setProperty ("path", source);
+    }
+    if (instrument != juce::File())
+    {
+        spec.getDynamicObject()->setProperty ("path", instrument.getFullPathName());
+        d.name = d.descriptiveName = instrument.getFileNameWithoutExtension();
+    }
+    if (sampleRoot != juce::File())
+    {
+        juce::Array<juce::var> roots;
+        if (const auto* old = spec["sample_roots"].getArray()) roots = *old;
+        roots.addIfNotAlreadyThere (sampleRoot.getFullPathName());
+        spec.getDynamicObject()->setProperty ("sample_roots", roots);
+    }
+    else if (instrument == juce::File())
+        spec.getDynamicObject()->setProperty ("sample_roots", juce::Array<juce::var>());
+    d.fileOrIdentifier = identifier ("cadence-kontakt:" + juce::JSON::toString (spec, true),
+                                      stored.isObject() ? stored["selector"].toString() : juce::String());
+    return d;
 }
 
 juce::File RustPluginProcessor::workerFile()
@@ -318,6 +380,9 @@ RustPluginProcessor::RustPluginProcessor (CadenceBridge* bridge, const juce::var
       inputs (static_cast<int> (info["inputs"])), outputs (static_cast<int> (info["outputs"])),
       sidechainInputs (static_cast<int> (info["sidechain_inputs"]))
 {
+    if (const auto* items = info["notices"].getArray())
+        for (const auto& item : *items)
+            notices += (notices.isEmpty() ? juce::String() : "\n\n") + item.toString();
     inputStorage.resize (static_cast<size_t> (inputs) * CADENCE_MAX_BLOCK);
     sidechainStorage.resize (static_cast<size_t> (sidechainInputs) * CADENCE_MAX_BLOCK);
     outputStorage.resize (static_cast<size_t> (outputs) * CADENCE_MAX_BLOCK);

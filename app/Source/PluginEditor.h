@@ -61,6 +61,7 @@ private:
     void scan();
     void showSkipped();
     void openSource();
+    void locateKontakt();
     int selectedChain() const;
     int selectedBrowser() const;
 
@@ -83,6 +84,7 @@ private:
 
     juce::TextButton scanButton { "Scan" };
     juce::TextButton openButton { "Open..." };
+    juce::TextButton locateButton { "Locate..." };
     juce::TextButton cancelLoadButton { "Cancel loading" };
     juce::TextButton skipButton { "Skip plugin" };
     juce::TextButton skippedButton { "Skipped (0)" };

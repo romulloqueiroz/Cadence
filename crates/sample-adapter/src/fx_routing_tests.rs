@@ -1387,7 +1387,7 @@ fn base_reverb_pre_delay_shifts_the_wet_onset() {
 }
 
 #[test]
-fn cabinet_runs_in_a_group_chain_and_stays_finite() {
+fn unsupported_group_cabinet_is_reported_instead_of_silently_skipped() {
     let fixture = Fixture::new(10_000);
     let mut raw = Vec::new();
     for value in [0.5f32, 0.5, 0.5, 0.5] {
@@ -1400,8 +1400,41 @@ fn cabinet_runs_in_a_group_chain_and_stays_finite() {
         raw,
         bypass: false,
     };
-    let mut plugin = routed_plugin(&fixture, chain(&[cabinet]));
-    let signal = advance(&mut plugin, 48_000.0, 3_000, &[Event::note_on(0, 60, 127)]);
-    assert!(signal.iter().all(|value| value.is_finite()));
-    assert!(signal.iter().any(|value| value.abs() > 1e-5));
+    let mut plugin = fixture.plugin(false, None);
+    plugin.groups[0].fx_chain = Some(chain(&[cabinet]));
+    let error = plugin.rebuild_group_fx().err().unwrap().to_string();
+    assert!(
+        error.contains("Unsupported group effect type 36") && error.contains("slot 1"),
+        "{error}"
+    );
+}
+
+#[test]
+fn unsupported_program_effect_is_reported_and_bypassed_effects_stay_inactive() {
+    let spec = FxSpec {
+        ser_type: 9999,
+        version: 0x50,
+        raw: Vec::new(),
+        bypass: false,
+    };
+    let error = PostFx::build(
+        &[chain(std::slice::from_ref(&spec))],
+        &mut |_| unreachable!(),
+    )
+    .err()
+    .unwrap()
+    .to_string();
+    assert!(
+        error.contains("Unsupported program effect type 9999"),
+        "{error}"
+    );
+    let bypassed = FxSpec {
+        bypass: true,
+        ..spec
+    };
+    assert!(
+        PostFx::build(&[chain(&[bypassed])], &mut |_| unreachable!())
+            .unwrap()
+            .is_none()
+    );
 }

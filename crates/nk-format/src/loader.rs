@@ -15,9 +15,20 @@ pub struct LoadedInstrument {
     nkr: Option<HashMap<String, SampleLocation>>,
     nkx: HashMap<PathBuf, HashMap<String, SampleLocation>>,
     retail: Option<encryption::ProductKey>,
+    relocation: crate::relocation::SampleRelocation,
+    pub compatibility_issues: Vec<String>,
 }
 
 impl LoadedInstrument {
+    pub fn load_with_sample_roots(
+        path: impl AsRef<Path>,
+        roots: &[PathBuf],
+    ) -> Result<Self, Error> {
+        let mut loaded = Self::load(path)?;
+        loaded.relocation = crate::relocation::SampleRelocation::new(roots)?;
+        Ok(loaded)
+    }
+
     pub fn load(path: impl AsRef<Path>) -> Result<Self, Error> {
         let path = path.as_ref().to_path_buf();
         use std::io::Read;
@@ -40,7 +51,8 @@ impl LoadedInstrument {
         match kind {
             Kind::Container => {
                 let bytes = read_instrument(&SampleLocation::file(&path)?)?;
-                let (instrument, retail) = build_from_container(&bytes, &path)?;
+                let (instrument, retail, compatibility_issues) =
+                    build_from_container(&bytes, &path)?;
                 Ok(LoadedInstrument {
                     instrument,
                     path,
@@ -48,6 +60,8 @@ impl LoadedInstrument {
                     nkr: None,
                     nkx: HashMap::new(),
                     retail,
+                    relocation: Default::default(),
+                    compatibility_issues,
                 })
             }
             Kind::FileContainer => {
@@ -60,7 +74,8 @@ impl LoadedInstrument {
                     })
                     .ok_or_else(|| Error::Malformed("file container has no .nki/.nkm".into()))?;
                 let bytes = read_instrument(main)?;
-                let (instrument, retail) = build_from_container(&bytes, &path)?;
+                let (instrument, retail, compatibility_issues) =
+                    build_from_container(&bytes, &path)?;
                 let embedded = files
                     .into_iter()
                     .map(|(name, location)| (file_container::basename_lower(&name), location))
@@ -72,11 +87,14 @@ impl LoadedInstrument {
                     nkr: None,
                     nkx: HashMap::new(),
                     retail,
+                    relocation: Default::default(),
+                    compatibility_issues,
                 })
             }
             Kind::Plain => {
                 let bytes = read_instrument(&SampleLocation::file(&path)?)?;
-                let (instrument, retail) = build_from_container(&bytes, &path)?;
+                let (instrument, retail, compatibility_issues) =
+                    build_from_container(&bytes, &path)?;
                 Ok(LoadedInstrument {
                     instrument,
                     path,
@@ -84,6 +102,8 @@ impl LoadedInstrument {
                     nkr: None,
                     nkx: HashMap::new(),
                     retail,
+                    relocation: Default::default(),
+                    compatibility_issues,
                 })
             }
             _ => Err(Error::Malformed(
@@ -104,7 +124,11 @@ impl LoadedInstrument {
         // Retail `.nkx` references concatenate the monolith path and the entry
         // name, for example `../Samples/GroveBass_0.nkxSamples/Bass_01.ncw`.
         if let Some((monolith_ref, entry)) = split_nkx(sample_ref) {
-            if let Some(monolith) = resolve_sample_path(&self.path, monolith_ref) {
+            let monolith = match resolve_sample_path(&self.path, monolith_ref) {
+                Some(path) => Some(path),
+                None => self.relocation.find(monolith_ref)?,
+            };
+            if let Some(monolith) = monolith {
                 if !self.nkx.contains_key(&monolith) {
                     let samples = locations::nkx(&monolith).unwrap_or_default();
                     let map = samples
@@ -127,6 +151,9 @@ impl LoadedInstrument {
                 return Ok(location);
             }
         }
+        if let Some(path) = self.relocation.find(sample_ref)? {
+            return SampleLocation::file(path);
+        }
         if self.nkr.is_none() {
             self.nkr = Some(build_nkr_map(&self.path));
         }
@@ -136,7 +163,7 @@ impl LoadedInstrument {
             .cloned()
             .ok_or_else(|| {
                 Error::Malformed(format!(
-                    "sample {key:?} not found on disk or in .nkr/.nkx resources"
+                    "Missing sample {sample_ref:?}. Use Locate samples to choose its library folder. No matching disk or .nkr/.nkx sample was found ({key})."
                 ))
             })
     }
@@ -184,10 +211,18 @@ fn looks_like_audio(bytes: &[u8]) -> bool {
 fn build_from_container(
     bytes: &[u8],
     path: &Path,
-) -> Result<(model::Instrument, Option<encryption::ProductKey>), Error> {
+) -> Result<
+    (
+        model::Instrument,
+        Option<encryption::ProductKey>,
+        Vec<String>,
+    ),
+    Error,
+> {
     if probe(bytes) == Kind::Plain {
         let container = crate::Container::parse(bytes)?;
-        return Ok((crate::plain_model::build(&container.root)?, None));
+        let issues = crate::compatibility::xml_issues(&container.root);
+        return Ok((crate::plain_model::build(&container.root)?, None, issues));
     }
     let item = ni_container::parse(bytes)?;
     let mut retail = None;
@@ -214,7 +249,13 @@ fn build_from_container(
         }
     })?;
     let chunks = preset_chunk::parse_all(&preset)?;
-    Ok((model::build(&chunks)?, retail))
+    let expanded = preset_chunk::expanded(&chunks);
+    let count = crate::compatibility::program_count(&expanded);
+    if count > 1 {
+        return Err(Error::Malformed(format!("This multi contains {count} programs. Open a single-program instrument; multitimbral multis are not supported.")));
+    }
+    let issues = crate::compatibility::binary_issues(&expanded);
+    Ok((model::build(&chunks)?, retail, issues))
 }
 
 fn preset_data(item: &ni_container::Item) -> Option<Vec<u8>> {

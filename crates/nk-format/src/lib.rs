@@ -9,6 +9,7 @@
 //! verified against files written by Kontakt itself. See `SPEC.md`.
 
 pub mod audio;
+mod compatibility;
 pub mod container;
 pub mod encryption;
 pub mod error;
@@ -26,6 +27,7 @@ pub mod ni_container;
 pub mod plain_model;
 pub mod preset_chunk;
 pub mod program;
+mod relocation;
 pub mod start_criteria;
 pub mod stream;
 pub mod units;

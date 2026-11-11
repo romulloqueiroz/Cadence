@@ -37,6 +37,8 @@ pub struct PluginMetadata {
     pub parameters: Vec<ParameterMetadata>,
     #[serde(default)]
     pub variants: Vec<PluginVariant>,
+    #[serde(default)]
+    pub notices: Vec<String>,
 }
 
 impl PluginMetadata {
@@ -79,6 +81,12 @@ impl PluginMetadata {
                     kind: plugin_api::abi::kind_code(v.kind),
                 })
                 .collect(),
+            notices: plugin
+                .load_notices()
+                .into_iter()
+                .take(16)
+                .map(|s| s.chars().take(512).collect())
+                .collect(),
         }
     }
 
@@ -101,6 +109,8 @@ impl PluginMetadata {
             && self.sidechain_inputs <= crate::shared::MAX_CHANNELS
             && self.capabilities().is_valid()
             && self.parameters.len() <= plugin_api::MAX_PARAMETERS
+            && self.notices.len() <= 16
+            && self.notices.iter().all(|n| n.len() <= 2048)
             && self.parameters.iter().enumerate().all(|(i, p)| {
                 p.id <= u16::MAX as u32
                     && !p.name.is_empty()

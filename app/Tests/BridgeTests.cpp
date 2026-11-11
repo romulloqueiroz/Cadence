@@ -1,5 +1,6 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <AudioToolbox/AudioToolbox.h>
+#include <CoreMIDI/CoreMIDI.h>
 #include "BridgeTests.h"
 #include "PluginProcessor.h"
 #include "RustPluginProcessor.h"
@@ -422,6 +423,7 @@ void nested (const juce::String& path, const juce::String& format, const juce::M
     check (instance != nullptr, "Load nested Cadence " + format + ": " + error);
     instance->setNonRealtime (true);
     instance->prepareToPlay (48000, 256);
+    AudioUnit audioUnit = nullptr;
     if (format == "AudioUnit")
     {
         // JUCE's AU host stores its own offline flag but does not forward the
@@ -435,6 +437,7 @@ void nested (const juce::String& path, const juce::String& format, const juce::M
             }
         } visitor;
         instance->getExtensions (visitor);
+        audioUnit = visitor.unit;
         UInt32 offline = 1;
         check (visitor.unit != nullptr && AudioUnitSetProperty (visitor.unit,
                     kAudioUnitProperty_OfflineRender, kAudioUnitScope_Global, 0, &offline, sizeof (offline)) == noErr,
@@ -473,6 +476,42 @@ void nested (const juce::String& path, const juce::String& format, const juce::M
     midi.addEvent (juce::MidiMessage::noteOn (1, 69, uint8_t (100)), 0);
     alignedBlock (*instance, buffer, midi);
     check (buffer.getMagnitude (0, 256) > 0.01f, "Nested " + format + " resolves packaged Rust worker and renders");
+    if (audioUnit != nullptr)
+        if (__builtin_available (macOS 12.0, *))
+        {
+            midi.clear();
+            midi.addEvent (juce::MidiMessage::noteOff (1, 69), 0);
+            alignedBlock (*instance, buffer, midi);
+            // Sine Demo has a 50 ms exponential release; allow it to decay.
+            for (int block = 0; block < 100; ++block)
+            {
+                midi.clear(); buffer.clear(); instance->processBlock (buffer, midi);
+            }
+            check (buffer.getMagnitude (0, 256) < 1.0e-5f, "AU UMP check starts from silence");
+            // Exercise both forms used by modern AU hosts, rather than only
+            // JUCE's legacy MusicDeviceMIDIEvent delivery path.
+            for (auto protocol : { kMIDIProtocol_1_0, kMIDIProtocol_2_0 })
+            {
+                MIDIEventList list {};
+                auto* packet = MIDIEventListInit (&list, protocol);
+                const UInt32 on1[] { 0x20904864 };
+                const UInt32 on2[] { 0x40904800, 0xc9240000 };
+                check (MIDIEventListAdd (&list, sizeof (list), packet, 0,
+                           protocol == kMIDIProtocol_1_0 ? 1 : 2,
+                           protocol == kMIDIProtocol_1_0 ? on1 : on2) != nullptr, "Build AU UMP note");
+                check (MusicDeviceMIDIEventList (audioUnit, 0, &list) == noErr, "AU accepts UMP note");
+                midi.clear(); alignedBlock (*instance, buffer, midi);
+                check (buffer.getMagnitude (0, 256) > 0.01f, "AU UMP note produces audible output");
+                midi.clear(); midi.addEvent (juce::MidiMessage::noteOff (1, 72), 0);
+                alignedBlock (*instance, buffer, midi);
+                for (int block = 0; block < 100; ++block)
+                {
+                    midi.clear(); buffer.clear(); instance->processBlock (buffer, midi);
+                }
+                check (buffer.getMagnitude (0, 256) < 1.0e-5f, "AU UMP note releases");
+            }
+            std::cout << "PASS AU MIDI 1 and MIDI 2 event-list delivery\n";
+        }
     instance->releaseResources();
     std::cout << "PASS nested Cadence " << format << " loads and renders the sandboxed protocol chain\n";
 }
@@ -613,5 +652,14 @@ void runBridgeTests (const juce::String& vst, const juce::String& au, const juce
     scanImports (scanner);
     runPipelineTests();
     if (vst.isNotEmpty()) nested (vst, "VST3", state);
-    if (au.isNotEmpty()) nested (au, "AudioUnit", state);
+    if (au.isNotEmpty())
+    {
+        const auto fixture = juce::File (__FILE__).getSiblingFile ("fixtures/legacy-cadence-chain.xml");
+        auto xml = juce::parseXML (fixture);
+        check (xml != nullptr && xml->hasTagName ("CADENCE"), "Read legacy AU rack fixture");
+        juce::MemoryBlock legacyState;
+        juce::AudioProcessor::copyXmlToBinary (*xml, legacyState);
+        nested (au, "AudioUnit", legacyState);
+        std::cout << "PASS legacy Logic rack state through the native AU wrapper\n";
+    }
 }

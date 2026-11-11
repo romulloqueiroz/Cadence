@@ -9,7 +9,32 @@ use std::{
 };
 
 pub fn load_plugin(source: &str, selector: Option<&str>) -> Result<Box<dyn Plugin>, String> {
-    let path = Path::new(source);
+    #[derive(serde::Deserialize)]
+    #[serde(deny_unknown_fields)]
+    struct KontaktSource {
+        path: String,
+        #[serde(default)]
+        sample_roots: Vec<std::path::PathBuf>,
+    }
+    let relocated = source
+        .strip_prefix("cadence-kontakt:")
+        .map(|json| {
+            if json.len() > 32_768 {
+                return Err("Instrument recovery settings exceed 32 KiB".to_owned());
+            }
+            serde_json::from_str::<KontaktSource>(json)
+                .map_err(|e| format!("Invalid instrument recovery settings: {e}"))
+        })
+        .transpose()?;
+    let path = Path::new(relocated.as_ref().map_or(source, |s| s.path.as_str()));
+    if relocated.is_some()
+        && !path
+            .extension()
+            .and_then(|e| e.to_str())
+            .is_some_and(|e| e.eq_ignore_ascii_case("nki") || e.eq_ignore_ascii_case("nkm"))
+    {
+        return Err("Instrument recovery requires an .nki or .nkm file".into());
+    }
     if source == "builtin:sine" {
         return Ok(Box::new(host::demo::SinePlugin::default()));
     }
@@ -29,7 +54,11 @@ pub fn load_plugin(source: &str, selector: Option<&str>) -> Result<Box<dyn Plugi
         .and_then(|e| e.to_str())
         .is_some_and(|e| e.eq_ignore_ascii_case("nki") || e.eq_ignore_ascii_case("nkm"))
     {
-        let mut sampler = sample_adapter::SamplerPlugin::load(path).map_err(|e| e.to_string())?;
+        let roots = relocated
+            .as_ref()
+            .map_or(&[][..], |s| s.sample_roots.as_slice());
+        let mut sampler = sample_adapter::SamplerPlugin::load_with_sample_roots(path, roots)
+            .map_err(|e| e.to_string())?;
         sampler
             .stream_all(sample_adapter::StreamingConfig::default())
             .map_err(|e| e.to_string())?;

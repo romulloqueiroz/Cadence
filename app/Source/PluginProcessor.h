@@ -51,6 +51,7 @@ public:
 
     bool addPlugin (const juce::PluginDescription& description, juce::String& error);
     void loadPluginAsync (const juce::PluginDescription&);
+    int relocateKontaktSlot (const juce::String& uuid, const juce::File& instrument, const juce::File& sampleRoot);
     void cancelLoading();
     bool isLoading() const { return loadingCount.load() > 0 || restorePending.load(); }
     juce::String getSlotLoadStatus (int) const;

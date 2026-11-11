@@ -102,6 +102,9 @@ fn main() -> ExitCode {
         }
     };
 
+    for notice in plugin.load_notices() {
+        eprintln!("Compatibility: {notice}");
+    }
     let preloaded = if resident {
         plugin.preload_note(note as i32, velocity as u16)
     } else {

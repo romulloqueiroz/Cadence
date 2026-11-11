@@ -503,6 +503,12 @@ pub trait MainThreadTasks: Send + Sync {
 pub trait Plugin: Send {
     fn descriptor(&self) -> Descriptor;
 
+    /// Load-time compatibility notices for the host UI. Never queried by the
+    /// audio callback; adapters without limitations inherit an empty list.
+    fn load_notices(&self) -> Vec<String> {
+        Vec::new()
+    }
+
     /// All plugin ids/descriptions contained by this loaded module. Most
     /// adapters expose one; CLAP modules may expose several selectable plugins.
     fn variants(&self) -> Vec<Descriptor> {

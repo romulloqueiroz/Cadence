@@ -807,7 +807,10 @@ impl Stage {
                 Convolution::new(source, params).map_err(|e| LoadError::Failed(e.into()))?,
             ))
         } else {
-            return Ok(None);
+            return Err(LoadError::Failed(format!(
+                "Unsupported program effect type {}. This effect cannot be played by Cadence.",
+                child.ser_type
+            )));
         };
         Ok(Some(Self {
             processor,

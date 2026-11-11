@@ -343,6 +343,10 @@ latency summation, and effect conformance.
 
 ## Next steps
 
+The [v1 release checklist](docs/RELEASE-CHECKLIST.md) tracks closure of the
+current Apple Silicon app/AU/VST3 and its [supported content subset](docs/SUPPORTED-CONTENT.md),
+separately from complete Kontakt parity.
+
 The ordered [Kontakt compatibility backlog](docs/kontakt-compatibility-roadmap.md)
 tracks remaining sampler work and acceptance checks. Channel-aware note lifetime
 handling and instrument-defined [external MIDI expression](docs/midi-expression.md)

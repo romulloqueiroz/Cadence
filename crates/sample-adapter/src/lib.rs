@@ -243,8 +243,15 @@ pub struct SamplerPlugin {
 
 impl SamplerPlugin {
     pub fn load(path: impl AsRef<Path>) -> Result<Self, LoadError> {
-        let mut loaded =
-            LoadedInstrument::load(path).map_err(|e| LoadError::Failed(e.to_string()))?;
+        Self::load_with_sample_roots(path, &[])
+    }
+
+    pub fn load_with_sample_roots(
+        path: impl AsRef<Path>,
+        roots: &[std::path::PathBuf],
+    ) -> Result<Self, LoadError> {
+        let mut loaded = LoadedInstrument::load_with_sample_roots(path, roots)
+            .map_err(|e| LoadError::Failed(e.to_string()))?;
         let zones = loaded.instrument.zones.clone();
         let groups = loaded.instrument.groups.clone();
         let sample_files = loaded.instrument.sample_files.clone();
@@ -1152,6 +1159,11 @@ impl SamplerPlugin {
 }
 
 impl Plugin for SamplerPlugin {
+    fn load_notices(&self) -> Vec<String> {
+        let mut notices = vec!["Kontakt playback subset: custom interfaces, scripts, time-stretch and formant engines are not supported. Use the instrument's saved sample mapping; full Kontakt behavior is not guaranteed.".into()];
+        notices.extend(self.loaded.compatibility_issues.iter().cloned());
+        notices
+    }
     fn descriptor(&self) -> Descriptor {
         Descriptor {
             id: "com.platform.kontakt",

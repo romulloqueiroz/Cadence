@@ -795,11 +795,22 @@ void CadenceAudioProcessor::loadPluginAsync (const juce::PluginDescription& desc
 {
     jassert (juce::MessageManager::getInstance()->isThisTheMessageThread());
     applyPendingState();
+    auto selected = description;
+    if (selected.pluginFormatName == "Kontakt")
+        for (const auto& known : plugins)
+            if (known.pluginFormatName == "Kontakt" && cadence::RustPluginProcessor::kontaktFile (known) == cadence::RustPluginProcessor::kontaktFile (selected))
+            { selected = known; break; }
+    if (selected.pluginFormatName == "Kontakt" && ! hasPlugin (selected))
+    {
+        plugins.push_back (selected);
+        pluginsVersion.fetch_add (1);
+        saveCache();
+    }
     uint64_t id;
     {
         const juce::SpinLock::ScopedLockType lock (graphLock);
         Slot slot;
-        slot.description = description;
+        slot.description = selected;
         slot.loadId = id = nextLoadId++;
         slot.loading = true;
         chain.push_back (std::move (slot));
@@ -828,14 +839,14 @@ void CadenceAudioProcessor::reloadSlot (int index)
         const juce::SpinLock::ScopedLockType lock (graphLock);
         if (! juce::isPositiveAndBelow (index, static_cast<int> (chain.size()))) return;
         auto& slot = chain[static_cast<size_t> (index)];
-        if (slot.node == nullptr || slot.loading) return;
-        auto* processor = slot.node->getProcessor();
+        if (slot.loading) return;
+        auto* processor = slot.node != nullptr ? slot.node->getProcessor() : nullptr;
         juce::MemoryBlock state;
         if (processor != nullptr) processor->getStateInformation (state);
-        slot.pendingState = state;
+        if (processor != nullptr) slot.pendingState = state;
         if (slot.cancelled != nullptr) slot.cancelled->store (true);
         slot.cancelled = std::make_shared<std::atomic<bool>> (false);
-        graph.removeNode (slot.node->nodeID);
+        if (slot.node != nullptr) graph.removeNode (slot.node->nodeID);
         slot.node = nullptr;
         slot.loading = true;
         slot.loadId = nextLoadId++;
@@ -859,6 +870,7 @@ void CadenceAudioProcessor::queueSlotLoad (uint64_t id)
         if (found->cancelled != nullptr) found->cancelled->store (true);
         found->cancelled = std::make_shared<std::atomic<bool>> (false);
         request.id = id;
+        found->loadError.clear();
         request.description = found->description;
         request.state = found->pendingState;
         request.cancelled = found->cancelled;
@@ -876,6 +888,36 @@ void CadenceAudioProcessor::queueSlotLoad (uint64_t id)
         setStatus ("Loading " + found->description.name + "...");
     }
     loader->enqueue (std::move (request));
+}
+
+int CadenceAudioProcessor::relocateKontaktSlot (const juce::String& uuid, const juce::File& instrument,
+                                                const juce::File& sampleRoot)
+{
+    jassert (juce::MessageManager::getInstance()->isThisTheMessageThread());
+    if ((instrument != juce::File() && (! instrument.existsAsFile() || ! instrument.hasFileExtension ("nki;nkm")))
+        || (sampleRoot != juce::File() && ! sampleRoot.isDirectory())) return -1;
+    int index = -1;
+    juce::PluginDescription previous, updated;
+    {
+        const juce::SpinLock::ScopedLockType lock (graphLock);
+        for (size_t i = 0; i < chain.size(); ++i)
+            if (chain[i].uuid == uuid && chain[i].description.pluginFormatName == "Kontakt" && ! chain[i].loading)
+            {
+                previous = chain[i].description;
+                updated = cadence::RustPluginProcessor::relocateKontakt (previous, instrument, sampleRoot);
+                chain[i].description = updated;
+                index = static_cast<int> (i);
+                break;
+            }
+    }
+    if (index < 0) return -1;
+    if (auto* editor = dynamic_cast<CadenceAudioProcessorEditor*> (getActiveEditor())) editor->clearSlotEditor();
+    for (auto& item : plugins)
+        if (item.createIdentifierString() == previous.createIdentifierString()) item = updated;
+    pluginsVersion.fetch_add (1);
+    saveCache();
+    reloadSlot (index);
+    return index;
 }
 
 void CadenceAudioProcessor::cancelLoading()

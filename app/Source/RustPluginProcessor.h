@@ -60,6 +60,11 @@ public:
     void refreshTimedParameterListeners();
     bool hasStateError() const { return stateError.load(); }
     static std::vector<juce::PluginDescription> bundledDescriptions();
+    static juce::PluginDescription kontaktDescription (const juce::File&);
+    static juce::File kontaktFile (const juce::PluginDescription&);
+    static juce::PluginDescription relocateKontakt (juce::PluginDescription, const juce::File& instrument,
+                                                   const juce::File& sampleRoot);
+    juce::String compatibilityNotices() const { return notices; }
     uint32_t workerId() const { return cadence_bridge_worker_id (handle); }
 
 private:
@@ -73,7 +78,7 @@ private:
     static juce::var metadata (CadenceBridge*);
 
     CadenceBridge* handle = nullptr;
-    juce::String name, formatName;
+    juce::String name, formatName, notices;
     int inputs = 0, outputs = 2, sidechainInputs = 0, intrinsicLatency = 0, preparedBlock = 512;
     double rate = 48000.0, tail = 0.0, tailSamples = 0.0;
     int64_t samplePosition = 0;

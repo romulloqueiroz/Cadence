@@ -62,12 +62,41 @@ fn worker_source_loader_streams_plain_xml_and_reports_missing_samples() {
     }
     assert!(plugin.streaming_telemetry().unwrap().resident_bytes > 0);
     drop(plugin);
-    std::fs::remove_file(sample).unwrap();
+    let relocated = directory.join("Recovered");
+    std::fs::create_dir_all(&relocated).unwrap();
+    std::fs::rename(&sample, relocated.join("tone Ω.wav")).unwrap();
     let error = match plugin_sandbox::worker::load_plugin(path.to_str().unwrap(), None) {
         Ok(_) => panic!("missing sample accepted"),
         Err(error) => error,
     };
-    assert!(error.contains("not found"), "{error}");
+    assert!(
+        error.contains("Missing sample") && error.contains("Locate samples"),
+        "{error}"
+    );
+    let source = format!(
+        "cadence-kontakt:{}",
+        serde_json::json!({"path":path,"sample_roots":[relocated]})
+    );
+    let mut recovered = plugin_sandbox::worker::load_plugin(&source, None).unwrap();
+    assert!(recovered
+        .load_notices()
+        .iter()
+        .any(|s| s.contains("Kontakt playback subset")));
+    recovered.prepare(&context);
+    recovered.set_offline_rendering(true);
+    let mut rendered = [0.0; 64];
+    recovered.process(
+        &context,
+        &mut AudioBuffer::new(&mut [], 0, &mut rendered, 2, &mut [], 0, 32),
+        &[Event::note_on(2, 48, 100)],
+    );
+    assert_eq!(rendered, output);
+    drop(recovered);
+    let bad = format!(
+        "cadence-kontakt:{}",
+        serde_json::json!({"path":path,"unexpected":true})
+    );
+    assert!(plugin_sandbox::worker::load_plugin(&bad, None).is_err());
     std::fs::remove_dir_all(directory).unwrap();
 }
 
